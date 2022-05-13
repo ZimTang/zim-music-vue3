@@ -7,7 +7,6 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElForm: typeof import('element-plus/es')['ElForm']
@@ -17,15 +16,13 @@ declare module '@vue/runtime-core' {
     ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
-    ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
-    LoginModal: typeof import('./src/components/login-modal.vue')['default']
+    LoginModal: typeof import('./components/login-modal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SearchInput: typeof import('./src/components/search-input.vue')['default']
-    ZimAside: typeof import('./src/components/zim-aside.vue')['default']
-    ZimAsideItem: typeof import('./src/components/zim-aside-item.vue')['default']
-    ZimHeader: typeof import('./src/components/zim-header.vue')['default']
+    SearchInput: typeof import('./components/search-input.vue')['default']
+    ZimAside: typeof import('./components/zim-aside.vue')['default']
+    ZimHeader: typeof import('./components/zim-header.vue')['default']
   }
 }
 
