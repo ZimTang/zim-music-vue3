@@ -10,5 +10,6 @@ export interface IUser {
     nickname?: string
     avatarUrl?: string
   }
+  cookie?: string
   token: string
 }

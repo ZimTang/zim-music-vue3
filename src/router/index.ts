@@ -31,6 +31,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/latest-music.vue')
       }
     ]
+  },
+  {
+    path: '/privateContent',
+    component: () => import('@/views/private-content.vue')
   }
 ]
 

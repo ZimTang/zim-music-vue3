@@ -14,7 +14,8 @@ export const useAuth = async () => {
       const newUser = ref<IUser>({
         profile: res.data.profile,
         account: res.data.account,
-        token: user.value.token
+        token: user.value.token,
+        cookie: user.value.cookie
       })
       userStore.changeProfile(newUser.value)
     } catch (error) {

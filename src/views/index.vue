@@ -36,22 +36,28 @@
     margin-bottom: 20px;
     line-height: 20px;
     display: flex;
-    width: calc(100% - 30vw);
+    width: calc(100% - 20vw);
     .header-item {
       flex: 1;
       text-align: center;
     }
     .active {
+      position: relative;
       font-size: 21px;
       font-weight: bold;
+      .header-item {
+        padding-bottom: 20px;
+      }
     }
     .active::after {
       content: '';
       display: block;
-      position: relative;
-      left: 40px;
       background-color: $primary-color;
-      width: 40px;
+      width: 50%;
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translate(-50%, 0);
       border-radius: 10px;
       border: 2px solid $primary-color;
       margin-top: 5px;

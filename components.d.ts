@@ -7,6 +7,8 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCarousel: typeof import('element-plus/es')['ElCarousel']
+    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElFooter: typeof import('element-plus/es')['ElFooter']
@@ -19,13 +21,19 @@ declare module '@vue/runtime-core' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
-    LoginModal: typeof import('./src/components/login-modal.vue')['default']
+    ElSlider: typeof import('element-plus/es')['ElSlider']
+    LoginModal: typeof import('./src/components/login-modal/login-modal.vue')['default']
+    RecommendLatestMusic: typeof import('./src/components/recommend/recommend-latest-music.vue')['default']
+    RecommendPrivateContent: typeof import('./src/components/recommend/recommend-private-content.vue')['default']
+    RecommendSongs: typeof import('./src/components/recommend/recommend-songs.vue')['default']
+    RecommendTitle: typeof import('./src/components/recommend/recommend-title.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SearchInput: typeof import('./src/components/search-input.vue')['default']
-    ZimAside: typeof import('./src/components/zim-aside.vue')['default']
+    SearchInput: typeof import('./src/components/layout/search-input.vue')['default']
+    ZimAside: typeof import('./src/components/layout/zim-aside.vue')['default']
     ZimAsideItem: typeof import('./src/components/zim-aside-item.vue')['default']
-    ZimHeader: typeof import('./src/components/zim-header.vue')['default']
+    ZimAudio: typeof import('./src/components/zim-audio/zim-audio.vue')['default']
+    ZimHeader: typeof import('./src/components/layout/zim-header.vue')['default']
   }
 }
 

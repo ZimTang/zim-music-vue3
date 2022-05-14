@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', {
     return {
       account: {},
       profile: {},
+      cookie: '',
       token: ''
     }
   },

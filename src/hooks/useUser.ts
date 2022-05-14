@@ -28,6 +28,8 @@ export const useUser = () => {
           })
           res.data.token &&
             localStorage.setItem('user', JSON.stringify(res.data))
+          // 本地设置cookie
+          localStorage.setItem('cookie', res.data.cookie!)
           user.value = {
             account: res.data.account,
             profile: res.data.profile,

@@ -2,8 +2,8 @@
 import { defineComponent } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useModal } from '@/hooks/useModal'
-import SearchInput from '@/components/search-input.vue'
-import LoginModal from '@/components/login-modal.vue'
+import SearchInput from '@/components/layout/search-input.vue'
+import LoginModal from '@/components/login-modal/login-modal.vue'
 import { ArrowLeft, ArrowRight, User } from '@element-plus/icons-vue'
 
 defineComponent({
