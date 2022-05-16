@@ -11,13 +11,13 @@ defineProps({
 <template>
   <div class="recommend-songs">
     <el-row :gutter="10">
-      <el-col :span="4" v-for="item in recommends.splice(0, 12)">
+      <el-col :span="6" v-for="item in recommends.splice(0, 8)">
         <div class="recommend-songs-item">
           <el-image
             :src="item.picUrl"
             class="item-image"
             fit="cover"
-            style="border-radius: 20px; width: 170px; height: 170px"
+            style="border-radius: 20px"
           />
           <div class="item-hover">
             <el-icon :size="30" color="#ec4141"><VideoPlay /></el-icon>
@@ -42,7 +42,8 @@ defineProps({
     transition: all 0.4s;
   }
   .item-hover {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     transition: all 0.4s;
     top: 45%;
@@ -54,7 +55,8 @@ defineProps({
     cursor: pointer;
   }
   .recommend-songs-item:hover .item-hover {
-    display: block;
+    visibility: visible;
+    opacity: 1;
   }
   .recommend-songs-item:hover .item-image {
     filter: blur(1px);
@@ -62,7 +64,7 @@ defineProps({
 
   .name {
     margin-top: 5px;
-    font-size: 14px;
+    font-size: 0.8rem;
   }
 }
 </style>

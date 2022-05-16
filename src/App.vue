@@ -37,7 +37,7 @@ defineComponent({
   padding: 0px;
 }
 .main {
-  height: 83vh;
+  height: 80vh;
 
   .main-content {
     width: 95%;

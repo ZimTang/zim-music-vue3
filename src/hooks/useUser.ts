@@ -26,14 +26,13 @@ export const useUser = () => {
           const res = await userFetch.login({
             ...loginForm.value
           })
-          res.data.token &&
-            localStorage.setItem('user', JSON.stringify(res.data))
+          res.token && localStorage.setItem('user', JSON.stringify(res))
           // 本地设置cookie
-          localStorage.setItem('cookie', res.data.cookie!)
+          localStorage.setItem('cookie', res.cookie!)
           user.value = {
-            account: res.data.account,
-            profile: res.data.profile,
-            token: res.data.token
+            account: res.account,
+            profile: res.profile,
+            token: res.token
           }
           ElMessage({
             message: '登录成功',
@@ -43,7 +42,6 @@ export const useUser = () => {
         } catch (error) {
           ElMessage({ type: 'error', message: (error as Error).toString() })
         }
-        console.log('submit!')
       } else {
         return
       }

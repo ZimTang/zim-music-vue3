@@ -1,10 +1,14 @@
 import http from '@/utils/http'
-import { AxiosPromise } from 'axios'
 
-const getSongDetail = (ids: number): AxiosPromise<any> => {
-  return http({ url: '/song/detail', params: { ids } })
+const getSongDetail = (ids: number): Promise<any> => {
+  return http.get('/song/detail', { params: { ids } })
+}
+
+const getSongUrl = (id: number): Promise<any> => {
+  return http.get('/song/url', { params: { id } })
 }
 
 export default {
-  getSongDetail
+  getSongDetail,
+  getSongUrl
 }

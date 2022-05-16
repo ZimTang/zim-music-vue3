@@ -6,6 +6,7 @@ specifiers:
   '@element-plus/icons-vue': ^1.1.4
   '@vitejs/plugin-vue': ^2.3.3
   axios: ^0.27.2
+  dayjs: ^1.11.2
   element-plus: ^2.2.0
   eslint: ^8.15.0
   eslint-config-prettier: ^8.5.0
@@ -27,6 +28,7 @@ specifiers:
 dependencies:
   '@element-plus/icons-vue': 1.1.4_vue@3.2.33
   axios: 0.27.2
+  dayjs: 1.11.2
   element-plus: 2.2.0_vue@3.2.33
   normalize.css: 8.0.1
   pinia: 2.0.14_ytvqwwdyss532bvoq2clv4ed5m

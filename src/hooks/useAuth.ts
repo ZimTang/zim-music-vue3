@@ -12,8 +12,8 @@ export const useAuth = async () => {
     try {
       const res = await userFetch.getUserDetail(user.value.profile.userId!)
       const newUser = ref<IUser>({
-        profile: res.data.profile,
-        account: res.data.account,
+        profile: res.profile,
+        account: res.account,
         token: user.value.token,
         cookie: user.value.cookie
       })

@@ -1,24 +1,23 @@
 <script setup lang="ts">
-import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { useModal } from '@/hooks/useModal'
 import SearchInput from '@/components/layout/search-input.vue'
 import LoginModal from '@/components/login-modal/login-modal.vue'
 import { ArrowLeft, ArrowRight, User } from '@element-plus/icons-vue'
 
-defineComponent({
-  SearchInput,
-  LoginModal
-})
-
+const router = useRouter()
 const userStore = useUserStore()
 const { changeModalShow, isModalShow } = useModal()
+const backIndex = () => {
+  router.replace('/')
+}
 </script>
 
 <template>
   <login-modal v-if="isModalShow" @changeModalShow="changeModalShow" />
   <div class="zim-header">
-    <div class="logo"></div>
+    <div class="logo" @click="backIndex"></div>
     <div class="progress">
       <el-icon class="header-button"><ArrowLeft /></el-icon>
       <el-icon class="header-button"><ArrowRight /></el-icon>
@@ -68,6 +67,10 @@ $button-size: 25px;
     line-height: $header-height;
     background: url('@/assets/images/logo.png') no-repeat;
     background-size: contain;
+  }
+
+  .logo:hover {
+    cursor: pointer;
   }
 
   .header-button {

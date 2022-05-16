@@ -18,22 +18,20 @@ export const useRecommendStore = defineStore('recommend', {
   },
   actions: {
     async getBanners() {
-      this.$state.banners = (
-        await recommendFetch.getRecommendBanners()
-      ).data.banners
+      this.$state.banners = (await recommendFetch.getRecommendBanners()).banners
     },
     async getRecommendResource() {
       this.$state.recommends = (
         await recommendFetch.getRecommendResource()
-      ).data.recommend
+      ).recommend
     },
     async getPrivateContent() {
       this.$state.privateContents = (
         await recommendFetch.getPrivateContent()
-      ).data.result
+      ).result
     },
     async getNewAlbum() {
-      this.$state.newAlbum = (await recommendFetch.getNewAlbum()).data.data
+      this.$state.newAlbum = (await recommendFetch.getNewAlbum()).data
     }
   }
 })

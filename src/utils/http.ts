@@ -14,8 +14,10 @@ http.interceptors.request.use((config) => {
 
 http.interceptors.response.use(
   (response) => {
-    if (response.data.code !== 200) return Promise.reject(response.data.msg)
-    return response
+    const { status, data } = response
+    if (response.status !== 200) return Promise.reject(data)
+    if (response.data.code !== 200) return Promise.reject(data.msg)
+    return Promise.resolve(data)
   },
   (error) => {
     return Promise.reject(error)
