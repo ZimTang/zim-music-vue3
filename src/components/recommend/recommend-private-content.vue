@@ -31,7 +31,7 @@ defineProps({
   }
   .item-name {
     margin-top: 8px;
-    font-size: 14px;
+    font-size: 1.4rem;
     color: #525252;
     padding-left: 5px;
   }

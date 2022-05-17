@@ -78,8 +78,8 @@ const rules = reactive<FormRules>({
   align-items: center;
   justify-content: center;
   margin-top: -20px;
-  width: 300px;
-  height: 400px;
+  width: 30rem;
+  height: 40rem;
   background: #ffffff;
   box-shadow: 5px 5px 5px 2px #eee;
   border: 1px solid #eee;
@@ -100,7 +100,7 @@ const rules = reactive<FormRules>({
     justify-content: center;
   }
   .login-btn-bg {
-    width: 200px;
+    width: 20rem;
     border: none;
     background-color: $primary-color !important;
     &:hover {

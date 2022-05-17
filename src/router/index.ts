@@ -35,6 +35,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/privateContent',
     component: () => import('@/views/private-content.vue')
+  },
+  {
+    path: '/songSheetItem/:id',
+    component: () => import('@/views/song-sheet-item.vue')
   }
 ]
 

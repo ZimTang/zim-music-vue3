@@ -13,7 +13,7 @@ import { Search } from '@element-plus/icons-vue'
 
 <style lang="scss">
 .search-input {
-  height: 25px;
+  height: 2.5rem;
   position: relative;
   .search-icon {
     top: 5px;

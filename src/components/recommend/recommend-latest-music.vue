@@ -29,7 +29,7 @@ defineProps({
 <style lang="scss">
 .recommend-latest-music {
   .album-item {
-    width: 100px;
+    width: 10rem;
   }
 }
 </style>

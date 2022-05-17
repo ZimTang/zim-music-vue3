@@ -9,7 +9,12 @@ const getUserDetail = (uid: number): Promise<IUser> => {
   return http.get('/user/detail', { params: { uid } })
 }
 
+const getUserRecord = (uid: number, type: number = 0): Promise<any> => {
+  return http.get('/user/record', { params: { uid, type } })
+}
+
 export default {
   login,
-  getUserDetail
+  getUserDetail,
+  getUserRecord
 }

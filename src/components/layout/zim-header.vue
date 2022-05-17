@@ -49,17 +49,17 @@ const backIndex = () => {
 
 <style lang="scss">
 @import '@/assets/styles/base.scss';
-$header-height: 65px;
+$header-height: 6.5rem;
+$button-size: 2.5rem;
 $header-hover-color: #eaeaea;
 $search-button-bg-color: #eaeaea;
-$button-size: 25px;
 
 .zim-header {
   display: flex;
   align-items: center;
   height: $header-height;
   background-color: $bg-gray-color;
-  padding: 0 30px 0 30px;
+  padding: 0 3rem 0 3rem;
 
   .logo {
     flex: 0.2;
@@ -75,7 +75,7 @@ $button-size: 25px;
 
   .header-button {
     width: $button-size;
-    margin-left: 5px;
+    margin-left: 0.5rem;
     height: $button-size;
     border-radius: 50%;
     background-color: $search-button-bg-color;
@@ -89,7 +89,7 @@ $button-size: 25px;
     display: flex;
     .icon {
       flex: 1;
-      margin-right: 10px;
+      margin-right: 1rem;
     }
   }
 
@@ -100,15 +100,15 @@ $button-size: 25px;
       align-items: center;
     }
     .profile-avatar {
-      width: $button-size + 10px;
-      height: $button-size + 10px;
-      margin-right: 5px;
+      width: $button-size + 1rem;
+      height: $button-size + 1rem;
+      margin-right: 0.5rem;
       border-radius: 50%;
       border: 1px solid #eaeaea;
       background-color: $header-hover-color;
     }
     .profile-username {
-      font-size: 14px;
+      font-size: 1.4rem;
       margin-left: 3px;
     }
   }

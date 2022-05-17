@@ -12,7 +12,10 @@ defineProps({
   <div class="recommend-songs">
     <el-row :gutter="10">
       <el-col :span="6" v-for="item in recommends.splice(0, 8)">
-        <div class="recommend-songs-item">
+        <router-link
+          :to="'/songSheetItem/' + item.id"
+          class="recommend-songs-item"
+        >
           <el-image
             :src="item.picUrl"
             class="item-image"
@@ -20,10 +23,10 @@ defineProps({
             style="border-radius: 20px"
           />
           <div class="item-hover">
-            <el-icon :size="30" color="#ec4141"><VideoPlay /></el-icon>
+            <el-icon color="#ec4141"><VideoPlay /></el-icon>
           </div>
           <div class="name">{{ item.name }}</div>
-        </div>
+        </router-link>
       </el-col>
     </el-row>
   </div>
@@ -32,8 +35,9 @@ defineProps({
 <style lang="scss">
 .recommend-songs {
   .recommend-songs-item {
+    display: inline-block;
     position: relative;
-    width: 170px;
+    width: 75%;
     transition: all 0.4s;
     margin-bottom: 20px;
     color: #525252;

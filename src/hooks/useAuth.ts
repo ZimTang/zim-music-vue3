@@ -15,11 +15,12 @@ export const useAuth = async () => {
         profile: res.profile,
         account: res.account,
         token: user.value.token,
-        cookie: user.value.cookie
+        cookie: user.value.cookie,
+        records: []
       })
       userStore.changeProfile(newUser.value)
     } catch (error) {
-      ElMessage({ type: 'error', message: '获取用户信息失败' })
+      ElMessage({ type: 'error', message: '获取用户信息失败,请重新登录' })
     }
   }
   return user
