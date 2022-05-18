@@ -1,61 +1,75 @@
 <!-- 歌单详情 -->
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { Headset } from '@element-plus/icons-vue'
-import useSongSheetItemStore from '@/stores/song-sheet-item'
+import usePlaylistItemStore from '@/stores/playlist-item'
 import dayjs from 'dayjs'
 import SongList from '@/common/song-list.vue'
 import { useAudio } from '@/hooks/useAudio'
 
 const loading = ref(true)
+const route = useRoute()
+const playlistItemStore = usePlaylistItemStore()
+const playlistItemRef = ref<HTMLElement | null>(null)
+const { handlePlayAll } = useAudio()
+
 onMounted(async () => {
   // TODO:数据分页，滑动到底部，请求剩余数据
-  await songSheetItemStore.getSongSheetItem(parseInt(route.params.id as string))
-  await songSheetItemStore.getSongSheetAllSong(
+  initData()
+})
+
+watch(
+  () => route.params.id,
+  () => {
+    initData()
+    // TODO:重新请求后，滚动到顶部
+    playlistItemRef.value?.scrollTo(0, 0)
+  }
+)
+
+// 初始化数据
+const initData = async () => {
+  loading.value = true
+  await playlistItemStore.getPlaylistItem(parseInt(route.params.id as string))
+  await playlistItemStore.getPlaylistAllSong(
     parseInt(route.params.id as string)
   )
   loading.value = false
-})
-const route = useRoute()
-const songSheetItemStore = useSongSheetItemStore()
-const songSheetItemRef = ref<HTMLElement | null>(null)
-const { handlePlayAll } = useAudio()
+}
 
 // 默认打开简介
 const isCollapseOpen = ref(['0'])
 </script>
 
 <template>
-  <div class="song-sheet-item" ref="songSheetItemRef" v-loading="loading">
+  <div class="song-sheet-item" ref="playlistItemRef" v-loading="loading">
     <div class="header">
       <div class="cover">
         <el-image
-          :src="songSheetItemStore.songSheetItem.playlist?.coverImgUrl"
+          :src="playlistItemStore.playlistItem.playlist?.coverImgUrl"
           style="height: 18rem; border-radius: 10%"
         ></el-image>
       </div>
       <div class="info">
         <div class="title">
-          {{ songSheetItemStore.songSheetItem.playlist?.name }}
+          {{ playlistItemStore.playlistItem.playlist?.name }}
         </div>
         <div class="creator">
           <div class="avatar">
             <el-image
-              :src="
-                songSheetItemStore.songSheetItem.playlist?.creator.avatarUrl
-              "
+              :src="playlistItemStore.playlistItem.playlist?.creator.avatarUrl"
               style="height: 3rem; border-radius: 50%"
             ></el-image>
           </div>
           <div class="nickname">
-            {{ songSheetItemStore.songSheetItem.playlist?.creator.nickname }}
+            {{ playlistItemStore.playlistItem.playlist?.creator.nickname }}
           </div>
           <div class="createTime">
             {{
-              dayjs(
-                songSheetItemStore.songSheetItem.playlist?.createTime
-              ).format('YYYY-MM-DD')
+              dayjs(playlistItemStore.playlistItem.playlist?.createTime).format(
+                'YYYY-MM-DD'
+              )
             }}创建
           </div>
         </div>
@@ -72,11 +86,11 @@ const isCollapseOpen = ref(['0'])
         <div class="tag">
           <span>标签:</span>
           <span
-            v-for="(tag, index) in songSheetItemStore.songSheetItem.playlist
+            v-for="(tag, index) in playlistItemStore.playlistItem.playlist
               ?.tags"
             >{{ tag }}
             {{
-              index === (songSheetItemStore.songSheetItem.playlist?.tags.length !- 1)
+              index === (playlistItemStore.playlistItem.playlist?.tags.length !- 1)
                 ? ''
                 : '/'
             }}</span
@@ -86,7 +100,7 @@ const isCollapseOpen = ref(['0'])
           <el-collapse v-model="isCollapseOpen" accordion>
             <el-collapse-item title="简介" name="1">
               {{
-                songSheetItemStore.songSheetItem.playlist?.description || '暂无'
+                playlistItemStore.playlistItem.playlist?.description || '暂无'
               }}
             </el-collapse-item>
           </el-collapse>
@@ -94,7 +108,7 @@ const isCollapseOpen = ref(['0'])
       </div>
     </div>
     <div class="main">
-      <song-list :data="songSheetItemStore.songSheetSongs.songs" />
+      <song-list :data="playlistItemStore.playlistSongs.songs" />
     </div>
   </div>
 </template>

@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import { VideoPlay } from '@element-plus/icons-vue'
+
 defineProps({
   recommends: {
     type: Object,
     required: true
+  },
+  imageUrlProps: {
+    type: String,
+    required: true
+  },
+  limit: {
+    type: Number,
+    default: 12
   }
 })
 </script>
@@ -11,13 +20,13 @@ defineProps({
 <template>
   <div class="recommend-songs">
     <el-row :gutter="10">
-      <el-col :span="6" v-for="item in recommends.splice(0, 8)">
+      <el-col :span="4" v-for="item in recommends.slice(0, limit)">
         <router-link
-          :to="'/songSheetItem/' + item.id"
+          :to="'/playlistItem/' + item.id"
           class="recommend-songs-item"
         >
           <el-image
-            :src="item.picUrl"
+            :src="item[imageUrlProps]"
             class="item-image"
             fit="cover"
             style="border-radius: 20px"

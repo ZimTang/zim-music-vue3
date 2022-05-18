@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { IBanner } from '@/models/recommend'
 import { recommendFetch } from '@/apis'
+import { ElMessage } from 'element-plus'
 
-export const useRecommendStore = defineStore('recommend', {
+const useRecommendStore = defineStore('recommend', {
   state(): {
     banners: Partial<IBanner[]>
     recommends: any
@@ -35,3 +36,5 @@ export const useRecommendStore = defineStore('recommend', {
     }
   }
 })
+
+export default useRecommendStore

@@ -15,8 +15,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/customized.vue')
       },
       {
-        path: '/songSheet',
-        component: () => import('@/views/song-sheet.vue')
+        path: '/playlist',
+        component: () => import('@/views/playlist.vue')
       },
       {
         path: '/rank',
@@ -37,8 +37,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/private-content.vue')
   },
   {
-    path: '/songSheetItem/:id',
-    component: () => import('@/views/song-sheet-item.vue')
+    path: '/playlistItem/:id',
+    component: () => import('@/views/playlist-item.vue')
   }
 ]
 

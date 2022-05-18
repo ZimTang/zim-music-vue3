@@ -13,8 +13,13 @@ const getUserRecord = (uid: number, type: number = 0): Promise<any> => {
   return http.get('/user/record', { params: { uid, type } })
 }
 
+const getUserPlayList = (uid: number): Promise<any> => {
+  return http.get('/user/playlist', { params: { uid } })
+}
+
 export default {
   login,
   getUserDetail,
-  getUserRecord
+  getUserRecord,
+  getUserPlayList
 }

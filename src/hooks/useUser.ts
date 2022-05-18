@@ -1,18 +1,20 @@
-import { FormInstance } from 'element-plus'
-import { userFetch } from '@/apis'
 import { ref } from 'vue'
+import { FormInstance, ElMessage } from 'element-plus'
+import { userFetch } from '@/apis'
 import { ILoginModel, IUser } from '@/models/user'
-import { useUserStore } from '@/stores/user'
-import { ElMessage } from 'element-plus'
+import useUserStore from '@/stores/user'
 
 export const useUser = () => {
   const userStore = useUserStore()
-
   const user = ref<IUser>({
     account: {},
     profile: {},
-    token: ''
+    token: '',
+    cookie: '',
+    records: [],
+    playlist: []
   })
+
   const loginForm = ref<ILoginModel>({
     phone: '',
     password: ''
@@ -32,20 +34,24 @@ export const useUser = () => {
           user.value = {
             account: res.account,
             profile: res.profile,
-            token: res.token
+            token: res.token,
+            cookie: res.cookie,
+            records: [],
+            playlist: []
           }
           ElMessage({
             message: '登录成功',
             type: 'success'
           })
-          userStore.changeProfile(user.value)
+          userStore.changeProfile(user.value.profile)
         } catch (error) {
-          ElMessage({ type: 'error', message: (error as Error).toString() })
+          ElMessage({ type: 'error', message: '请重新登录' })
         }
       } else {
         return
       }
     })
   }
+
   return { user, loginForm, handleLogin }
 }

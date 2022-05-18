@@ -1,6 +1,6 @@
-import { IUser } from '@/models/user'
 import { ref } from 'vue'
-import { useUserStore } from '@/stores/user'
+import { IUser } from '@/models/user'
+import useUserStore from '@/stores/user'
 import { userFetch } from '@/apis'
 import { ElMessage } from 'element-plus'
 
@@ -8,20 +8,16 @@ import { ElMessage } from 'element-plus'
 export const useAuth = async () => {
   const userStore = useUserStore()
   const user = ref<IUser>(JSON.parse(localStorage.getItem('user') || '{}'))
-  if (user.value.token) {
+  if (Object.keys(user.value).length) {
     try {
       const res = await userFetch.getUserDetail(user.value.profile.userId!)
-      const newUser = ref<IUser>({
-        profile: res.profile,
-        account: res.account,
-        token: user.value.token,
-        cookie: user.value.cookie,
-        records: []
-      })
-      userStore.changeProfile(newUser.value)
+      userStore.changeProfile(res.profile)
+      return Promise.resolve(true)
     } catch (error) {
       ElMessage({ type: 'error', message: '获取用户信息失败,请重新登录' })
+      return Promise.reject(false)
     }
+  } else {
+    return Promise.resolve(false)
   }
-  return user
 }

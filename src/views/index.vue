@@ -10,7 +10,7 @@
         <router-link to="/customized">专属定制</router-link>
       </div>
       <div class="header-item">
-        <router-link to="/songSheet">歌单</router-link>
+        <router-link to="/playlist">歌单</router-link>
       </div>
       <div class="header-item">
         <router-link to="/rank">排行榜</router-link>

@@ -1,6 +1,6 @@
 <!-- 底部播放器 -->
 <script setup lang="ts">
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { songFetch } from '@/apis'
 import { timeToMinute } from '@/utils/audio'
 import {
@@ -11,13 +11,6 @@ import {
   SetUp
 } from '@element-plus/icons-vue'
 import useAudioStore from '@/stores/audio'
-
-const props = defineProps({
-  currentAudioId: {
-    type: Number,
-    required: true
-  }
-})
 
 const audioRef = ref<HTMLAudioElement | null>(null)
 const currentAudioDetail = ref<any>({})
@@ -31,8 +24,11 @@ const audioStore = useAudioStore()
 
 // 初始化
 const initAudio = async () => {
-  currentAudioDetail.value = await songFetch.getSongDetail(props.currentAudioId)
-  const songUrl = await songFetch.getSongUrl(props.currentAudioId)
+  if (!audioStore.audioId) {
+    return
+  }
+  currentAudioDetail.value = await songFetch.getSongDetail(audioStore.audioId)
+  const songUrl = await songFetch.getSongUrl(audioStore.audioId)
   // 获取到当前歌曲的url
   currentAudioUrl.value = songUrl.data[0].url
   // 获取到当前歌曲的持续时间
@@ -50,21 +46,23 @@ const initAudio = async () => {
 const changeAudio = async () => {
   currentTime.value = '00:00'
   isShowPlayIcon.value = true
-  currentAudioDetail.value = await songFetch.getSongDetail(props.currentAudioId)
-  const songUrl = await songFetch.getSongUrl(props.currentAudioId)
-  currentAudioUrl.value = songUrl.data[0].url
+  if (!audioStore.audioId) {
+    return
+  }
+  currentAudioDetail.value = await songFetch.getSongDetail(audioStore.audioId)
+  currentAudioUrl.value = await (
+    await songFetch.getSongUrl(audioStore.audioId)
+  ).data[0].url
   currentAudioDetail.value.duration = timeToMinute(
     currentAudioDetail.value.songs[0]?.dt / 1000
   )
-  if (!isInit.value) {
-    await nextTick(() => {
-      audioRef.value?.play()
-    })
+  if (isInit.value) {
+    audioRef.value?.play()
   }
 }
 
 onMounted(initAudio)
-watch(() => props.currentAudioId, changeAudio)
+watch(() => audioStore.audioId, changeAudio)
 
 // 播放
 const playAudio = () => {
@@ -113,7 +111,7 @@ const watchCurrentTimeChange = () => {
 
 // 上一首歌曲
 const prevAudio = () => {
-  if (audioStore.order > 1) {
+  if (audioStore.order >= 1) {
     audioStore.audioId = audioStore.audioList[audioStore.order - 1].id
     --audioStore.order
     localStorage.setItem('order', audioStore.order.toString())

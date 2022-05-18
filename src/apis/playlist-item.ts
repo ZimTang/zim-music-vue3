@@ -1,11 +1,11 @@
-import { ISongSheetItem } from '@/models/song-sheet'
+import { IPlaylistItem } from '@/models/playlist'
 import http from '@/utils/http'
 
-export const getSongSheetItem = (id: number): Promise<ISongSheetItem> => {
+export const getPlaylistItem = (id: number): Promise<IPlaylistItem> => {
   return http.get('/playlist/detail', { params: { id } })
 }
 
-export const getSongSheetAllSong = (
+export const getPlaylistAllSong = (
   id: number,
   limit?: number,
   offset?: number
@@ -14,6 +14,6 @@ export const getSongSheetAllSong = (
 }
 
 export default {
-  getSongSheetItem,
-  getSongSheetAllSong
+  getPlaylistItem,
+  getPlaylistAllSong
 }

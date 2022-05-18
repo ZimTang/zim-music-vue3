@@ -12,5 +12,8 @@ export interface IUser {
   }
   cookie?: string
   token: string
-  records: []
+  records: any[]
+  playlist: any[]
+  likelist: any[]
+  isAuth: boolean
 }

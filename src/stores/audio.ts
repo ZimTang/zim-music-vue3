@@ -13,6 +13,7 @@ interface IAudioStoreState {
 
 interface IAudioStoreActions {
   getCacheAudioId: () => void
+  getCacheAudioList: () => void
   changeAudioList: (list: []) => void
   changeAudio: (id: number) => void
 }
@@ -33,6 +34,9 @@ const useAudioStore = defineStore<
   actions: {
     getCacheAudioId() {
       this.audioId = parseInt(localStorage.getItem('audioId')!)
+    },
+    getCacheAudioList() {
+      this.audioList = JSON.parse(localStorage.getItem('audioList') || '[]')
     },
     changeAudioList([...list]: []) {
       this.audioList = list

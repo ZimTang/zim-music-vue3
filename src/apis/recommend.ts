@@ -6,7 +6,7 @@ const getRecommendBanners = (): Promise<IFetchBanners> => {
 }
 
 const getRecommendResource = (): Promise<any> => {
-  return http.get('/recommend/resource?')
+  return http.get('/recommend/resource')
 }
 
 const getPrivateContent = (): Promise<any> => {

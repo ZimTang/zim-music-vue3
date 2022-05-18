@@ -4,16 +4,19 @@ import ZimHeader from '@/components/layout/zim-header.vue'
 import ZimAside from '@/components/layout/zim-aside.vue'
 import ZimAudio from './components/zim-audio/zim-audio.vue'
 import { useAuth } from '@/hooks/useAuth'
-import { useUserStore } from '@/stores/user'
-import useAudioStore from './stores/audio'
+import useUserStore from '@/stores/user'
+import useAudioStore from '@/stores/audio'
 
 onMounted(async () => {
-  audioStore.getCacheAudioId()
-  audioStore.audioList = JSON.parse(localStorage.getItem('audioList') || '')
-  await useAuth()
-  userStore.records = await (
+  await audioStore.getCacheAudioId()
+  await audioStore.getCacheAudioList()
+  userStore.isAuth = await useAuth()
+  if (userStore.isAuth) {
+    // 获取用户播放记录
     await userStore.getUserRecord(userStore.profile.userId!)
-  ).allData
+    // 获取用户歌单
+    await userStore.getUserPlayList()
+  }
 })
 const audioStore = useAudioStore()
 const userStore = useUserStore()
@@ -38,7 +41,7 @@ defineComponent({
       </el-container>
     </el-scrollbar>
     <el-footer>
-      <zim-audio :current-audio-id="audioStore.audioId" />
+      <zim-audio />
     </el-footer>
   </el-container>
 </template>

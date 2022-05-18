@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import useUserStore from '@/stores/user'
 import { useModal } from '@/hooks/useModal'
 import SearchInput from '@/components/layout/search-input.vue'
 import LoginModal from '@/components/login-modal/login-modal.vue'
@@ -19,22 +19,26 @@ const backIndex = () => {
   <div class="zim-header">
     <div class="logo" @click="backIndex"></div>
     <div class="progress">
-      <el-icon class="header-button"><ArrowLeft /></el-icon>
-      <el-icon class="header-button"><ArrowRight /></el-icon>
+      <el-icon class="header-button active" @click="router.back()"
+        ><ArrowLeft
+      /></el-icon>
+      <el-icon class="header-button active" @click="router.forward()"
+        ><ArrowRight
+      /></el-icon>
     </div>
     <div class="search">
       <search-input />
     </div>
     <div class="profile">
       <div
-        v-if="!userStore.token"
+        v-if="!Object.keys(userStore.profile).length"
         class="profile-info"
         @click="isModalShow = true"
       >
         <el-icon class="profile-avatar"><User /></el-icon>
         <div class="profile-username">未登录</div>
       </div>
-      <div v-if="userStore.token" class="profile-info">
+      <div v-if="Object.keys(userStore.profile).length" class="profile-info">
         <el-image
           class="profile-avatar"
           :src="userStore.profile.avatarUrl"
@@ -75,10 +79,15 @@ $search-button-bg-color: #eaeaea;
 
   .header-button {
     width: $button-size;
-    margin-left: 0.5rem;
+    margin-right: 1rem;
     height: $button-size;
     border-radius: 50%;
     background-color: $search-button-bg-color;
+  }
+
+  .active:hover {
+    background-color: rgb(218, 218, 218);
+    cursor: pointer;
   }
 
   .progress {

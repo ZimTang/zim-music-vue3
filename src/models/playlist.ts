@@ -369,8 +369,8 @@ export class ResEntrance {}
 
 export class RelatedVideos {}
 
-/*ISongSheetItem*/
-export class ISongSheetItem {
+/*IPlaylistItem*/
+export class IPlaylistItem {
   code: number
   relatedVideos: RelatedVideos
   playlist: Playlist
