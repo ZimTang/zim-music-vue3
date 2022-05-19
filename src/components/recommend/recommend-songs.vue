@@ -11,8 +11,7 @@ defineProps({
     required: true
   },
   limit: {
-    type: Number,
-    default: 12
+    type: Number
   }
 })
 </script>
@@ -20,7 +19,10 @@ defineProps({
 <template>
   <div class="recommend-songs">
     <el-row :gutter="10">
-      <el-col :span="4" v-for="item in recommends.slice(0, limit)">
+      <el-col
+        :span="4"
+        v-for="item in recommends.slice(0, limit ? limit : recommends.length)"
+      >
         <router-link
           :to="'/playlistItem/' + item.id"
           class="recommend-songs-item"

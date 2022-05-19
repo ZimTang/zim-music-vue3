@@ -38,7 +38,12 @@ watch(
 <template>
   <div class="recommend" v-loading="isLoading">
     <div class="banners">
-      <el-carousel :interval="2000" type="card" height="200px">
+      <el-carousel
+        :interval="2000"
+        type="card"
+        height="200px"
+        :initial-index="2"
+      >
         <el-carousel-item
           v-for="banner in recommendStore.banners"
           :key="banner?.targetId"

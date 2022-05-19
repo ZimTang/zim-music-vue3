@@ -15,5 +15,6 @@ export interface IUser {
   records: any[]
   playlist: any[]
   likelist: any[]
+  personalized: any[]
   isAuth: boolean
 }

@@ -17,9 +17,14 @@ const getUserPlayList = (uid: number): Promise<any> => {
   return http.get('/user/playlist', { params: { uid } })
 }
 
+const getUserPersonalized = (limit?: number): Promise<any> => {
+  return http.get('/personalized', { params: { limit } })
+}
+
 export default {
   login,
   getUserDetail,
   getUserRecord,
-  getUserPlayList
+  getUserPlayList,
+  getUserPersonalized
 }

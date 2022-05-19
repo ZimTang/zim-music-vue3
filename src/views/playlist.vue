@@ -5,7 +5,7 @@ import RecommendSongs from '@/components/recommend/recommend-songs.vue'
 import usePlaylistStore from '@/stores/playlist'
 
 const playlistStore = usePlaylistStore()
-const limit = ref(50)
+const limit = ref(18)
 const offset = ref(1)
 const isLoading = ref(true)
 const currentTag = ref('华语')
@@ -17,18 +17,18 @@ onMounted(async () => {
   isLoading.value = false
 })
 
-watch(offset, async (newOffset, oldOffset) => {
-  if (newOffset > oldOffset) {
-    isLoading.value = true
-    const lastItem = playlistStore.playlists[playlistStore.playlists.length - 1]
-    await playlistStore.getHighQuantityPlaylist(
-      currentTag.value,
-      limit.value,
-      lastItem.updateTime
-    )
-    isLoading.value = false
-  }
-})
+// watch(offset, async (newOffset, oldOffset) => {
+//   if (newOffset > oldOffset) {
+//     isLoading.value = true
+//     const lastItem = playlistStore.playlists[playlistStore.playlists.length - 1]
+//     await playlistStore.getHighQuantityPlaylist(
+//       currentTag.value,
+//       limit.value,
+//       lastItem.updateTime
+//     )
+//     isLoading.value = false
+//   }
+// })
 
 // 分页
 watch(currentTag, async ([newCurrentTag, oldCurrentTag]) => {
@@ -74,7 +74,6 @@ const handleChangePlaylist = (item: any) => {
           )
         "
         image-url-props="coverImgUrl"
-        :limit="limit"
       />
     </div>
     <div class="pagination"></div>

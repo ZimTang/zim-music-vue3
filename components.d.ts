@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ArtistCate: typeof import('./src/components/artist/artist-cate.vue')['default']
     AudioList: typeof import('./src/components/zim-audio/audio-list.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']

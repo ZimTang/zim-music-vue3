@@ -12,7 +12,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/customized',
-        component: () => import('@/views/customized.vue')
+        component: () => import('@/views/personalized.vue')
       },
       {
         path: '/playlist',
@@ -24,7 +24,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/vocalist',
-        component: () => import('@/views/vocalist.vue')
+        component: () => import('@/views/artist.vue')
       },
       {
         path: '/latestMusic',

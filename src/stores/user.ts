@@ -12,6 +12,7 @@ const useUserStore = defineStore('user', {
       records: [],
       playlist: [],
       likelist: [],
+      personalized: [],
       isAuth: false
     }
   },
@@ -23,7 +24,6 @@ const useUserStore = defineStore('user', {
     },
     userCollectedPlaylist: (state: IUser) => {
       return state.playlist.filter((item) => {
-        // @ts-ignore
         return item.creator.userId !== state.profile.userId
       })
     }
@@ -39,6 +39,12 @@ const useUserStore = defineStore('user', {
       this.playlist = await (
         await userFetch.getUserPlayList(this.$state.profile.userId!)
       ).playlist
+    },
+    async getUserPersonalized(limit?: number) {
+      this.personalized = await (
+        await userFetch.getUserPersonalized(limit)
+      ).result
+      console.log(this.personalized)
     }
   }
 })

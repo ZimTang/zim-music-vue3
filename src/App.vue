@@ -18,6 +18,7 @@ onMounted(async () => {
     await userStore.getUserPlayList()
   }
 })
+
 const audioStore = useAudioStore()
 const userStore = useUserStore()
 
@@ -42,20 +43,18 @@ defineComponent({
 <template>
   <el-container>
     <el-header><zim-header /></el-header>
-    <el-scrollbar height="78vh">
-      <el-container class="main">
-        <el-aside width="250px"><zim-aside /></el-aside>
-        <el-container>
-          <el-main>
-            <router-view v-slot="{ Component }">
-              <keep-alive>
-                <component :is="Component" />
-              </keep-alive>
-            </router-view>
-          </el-main>
-        </el-container>
+    <el-container class="main">
+      <el-aside width="250px"><zim-aside /></el-aside>
+      <el-container>
+        <el-main>
+          <router-view v-slot="{ Component }">
+            <keep-alive>
+              <component :is="Component" />
+            </keep-alive>
+          </router-view>
+        </el-main>
       </el-container>
-    </el-scrollbar>
+    </el-container>
     <el-footer>
       <zim-audio />
     </el-footer>
@@ -76,7 +75,6 @@ body {
 }
 .main {
   height: 78vh;
-
   .main-content {
     width: 95%;
     margin: 0 auto;
