@@ -4,7 +4,7 @@ import useAudioStore from '@/stores/audio'
 import { useAudio } from '@/hooks/useAudio'
 import { timeToMinute } from '@/utils/audio'
 const audioStore = useAudioStore()
-const { playAudio } = useAudio()
+const { playAudio } = useAudio(false)
 </script>
 
 <template>

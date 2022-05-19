@@ -1,6 +1,6 @@
 import useAudioStore from '@/stores/audio'
 import usePlaylistItemStore from '@/stores/playlist-item'
-export const useAudio = () => {
+export const useAudio = (isNotClickAudioList: boolean = true) => {
   const audioStore = useAudioStore()
   const playlistItemStore = usePlaylistItemStore()
 
@@ -18,11 +18,14 @@ export const useAudio = () => {
   // 在歌单里播放单首歌曲
   const playAudio = (audio: any) => {
     if (audio.id === audioStore.audioId) return
-    localStorage.setItem(
-      'audioList',
-      JSON.stringify(playlistItemStore.playlistSongs.songs)
-    )
-    audioStore.changeAudioList(playlistItemStore.playlistSongs.songs)
+    // 判断是否点击的是播放列表里面的item
+    if (isNotClickAudioList) {
+      localStorage.setItem(
+        'audioList',
+        JSON.stringify(playlistItemStore.playlistSongs.songs)
+      )
+      audioStore.changeAudioList(playlistItemStore.playlistSongs.songs)
+    }
     changeOrder(audio)
     audioStore.audioId = audio.id
     localStorage.setItem('audioId', audio.id)
