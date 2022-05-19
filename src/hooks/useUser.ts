@@ -12,7 +12,9 @@ export const useUser = () => {
     token: '',
     cookie: '',
     records: [],
-    playlist: []
+    playlist: [],
+    likelist: [],
+    isAuth: false
   })
 
   const loginForm = ref<ILoginModel>({
@@ -37,8 +39,11 @@ export const useUser = () => {
             token: res.token,
             cookie: res.cookie,
             records: [],
-            playlist: []
+            playlist: [],
+            likelist: [],
+            isAuth: true
           }
+          userStore.isAuth = true
           ElMessage({
             message: '登录成功',
             type: 'success'

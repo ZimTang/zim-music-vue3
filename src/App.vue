@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, watch } from 'vue'
 import ZimHeader from '@/components/layout/zim-header.vue'
 import ZimAside from '@/components/layout/zim-aside.vue'
 import ZimAudio from './components/zim-audio/zim-audio.vue'
@@ -21,6 +21,18 @@ onMounted(async () => {
 const audioStore = useAudioStore()
 const userStore = useUserStore()
 
+watch(
+  () => userStore.isAuth,
+  async () => {
+    if (userStore.isAuth) {
+      // 获取用户播放记录
+      await userStore.getUserRecord(userStore.profile.userId!)
+      // 获取用户歌单
+      await userStore.getUserPlayList()
+    }
+  }
+)
+
 defineComponent({
   ZimHeader,
   ZimAside
@@ -35,7 +47,11 @@ defineComponent({
         <el-aside width="250px"><zim-aside /></el-aside>
         <el-container>
           <el-main>
-            <router-view class="main-content"></router-view>
+            <router-view v-slot="{ Component }">
+              <keep-alive>
+                <component :is="Component" />
+              </keep-alive>
+            </router-view>
           </el-main>
         </el-container>
       </el-container>

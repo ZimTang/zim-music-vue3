@@ -47,8 +47,6 @@ watch(
 
 // 进入歌单
 const goToPlaylistItem = (node: any) => {
-  console.log(node)
-
   if (!userStore.isAuth) {
     ElMessage.error('请先登录')
     return

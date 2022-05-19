@@ -7,30 +7,28 @@ import RecommendLatestMusic from '@/components/recommend/recommend-latest-music.
 import { useAuth } from '@/hooks/useAuth'
 import usePlaylistStore from '@/stores/playlist'
 import useRecommendStore from '@/stores/recommend'
+import useUserStore from '@/stores/user'
 
 const recommendStore = useRecommendStore()
 const playlistStore = usePlaylistStore()
+const userStore = useUserStore()
 const isLoading = ref(true)
-const isAuth = ref<any>(null)
 
 onMounted(async () => {
   await recommendStore.getBanners()
   await recommendStore.getPrivateContent()
   await recommendStore.getNewAlbum()
-  isAuth.value = await useAuth()
-  console.log(isAuth.value)
-
-  isAuth.value
+  await useAuth()
+  userStore.isAuth
     ? await recommendStore.getRecommendResource()
     : await playlistStore.getHighQuantityPlaylist()
-
   isLoading.value = false
 })
 
 watch(
-  () => isAuth.value,
+  () => userStore.isAuth,
   async () => {
-    if (isAuth.value === true) {
+    if (userStore.isAuth === true) {
       await recommendStore.getRecommendResource()
     }
   }
@@ -57,11 +55,14 @@ watch(
       <recommend-title link="/playlist" title="推荐歌单" />
       <recommend-songs
         :recommends="
-          recommendStore.recommends
+          recommendStore.recommends.length > 0
             ? recommendStore.recommends
             : playlistStore.playlists
         "
-        image-url-props="picUrl"
+        :image-url-props="
+          recommendStore.recommends.length > 0 ? 'picUrl' : 'coverImgUrl'
+        "
+        :limit="recommendStore.recommends.length >= 12 ? 12 : 6"
       />
     </div>
     <div class="private-content">
