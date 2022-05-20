@@ -53,7 +53,6 @@ const backIndex = () => {
 
 <style lang="scss">
 @import '@/assets/styles/base.scss';
-$header-height: 6.5rem;
 $button-size: 2.5rem;
 $header-hover-color: #eaeaea;
 $search-button-bg-color: #eaeaea;
@@ -61,14 +60,15 @@ $search-button-bg-color: #eaeaea;
 .zim-header {
   display: flex;
   align-items: center;
-  height: $header-height;
+  height: 100%;
   background-color: $bg-gray-color;
   padding: 0 3rem 0 3rem;
 
   .logo {
     flex: 0.2;
-    height: 100%;
-    line-height: $header-height;
+    height: 104%;
+    display: flex;
+    align-items: center;
     background: url('@/assets/images/logo.png') no-repeat;
     background-size: contain;
   }

@@ -1,27 +1,36 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import LinkHeader from '@/common/link-header.vue'
+const config = [
+  {
+    to: '/recommend',
+    text: '个性推荐'
+  },
+  {
+    to: '/customized',
+    text: '专属定制'
+  },
+  {
+    to: '/playlist',
+    text: '歌单'
+  },
+  {
+    to: '/rank',
+    text: '排行榜'
+  },
+  {
+    to: '/artist',
+    text: '歌手'
+  },
+  {
+    to: '/latestMusic',
+    text: '最新音乐'
+  }
+]
+</script>
 
 <template>
   <div class="index">
-    <div class="index-header">
-      <div class="header-item">
-        <router-link to="/recommend">个性推荐</router-link>
-      </div>
-      <div class="header-item">
-        <router-link to="/customized">专属定制</router-link>
-      </div>
-      <div class="header-item">
-        <router-link to="/playlist">歌单</router-link>
-      </div>
-      <div class="header-item">
-        <router-link to="/rank">排行榜</router-link>
-      </div>
-      <div class="header-item">
-        <router-link to="/vocalist">歌手</router-link>
-      </div>
-      <div class="header-item">
-        <router-link to="/latestMusic">最新音乐</router-link>
-      </div>
-    </div>
+    <link-header :config="config" />
     <router-view></router-view>
   </div>
 </template>

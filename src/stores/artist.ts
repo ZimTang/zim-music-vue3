@@ -1,14 +1,9 @@
-import { artistsFetch } from '@/apis'
 import { defineStore } from 'pinia'
-import { IArtistStoreAction, IArtistStoreState } from '@/models/artist'
+import { artistFetch } from '@/apis'
+import { IArtistStoreState } from '@/models/artist'
 
-const useArtistStore = defineStore<
-  string,
-  IArtistStoreState,
-  {},
-  IArtistStoreAction
->('artist', {
-  state() {
+const useArtistStore = defineStore('artist', {
+  state(): IArtistStoreState {
     return {
       artists: [],
       more: true,
@@ -19,7 +14,7 @@ const useArtistStore = defineStore<
   },
   actions: {
     async getTopArtists(limit: number, offset: number) {
-      const res = await artistsFetch.getTopArtists(limit, offset)
+      const res = await artistFetch.getTopArtists(limit, offset)
       this.more = res.more
       this.artists = res.artists
     },
@@ -30,7 +25,7 @@ const useArtistStore = defineStore<
       limit: number,
       offset: number
     ) {
-      const res = await artistsFetch.getArtistList(
+      const res = await artistFetch.getArtistList(
         type,
         area,
         initial,

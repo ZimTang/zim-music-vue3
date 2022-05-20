@@ -143,10 +143,13 @@ watch(
     font-size: 1.5rem;
     margin-bottom: 2rem;
     display: flex;
+    flex-wrap: wrap;
+    line-height: 2.5rem;
     .title {
       color: #676767;
     }
     .active {
+      font-weight: bold;
       color: $primary-color !important;
     }
     .cate {

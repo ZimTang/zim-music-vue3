@@ -5,7 +5,12 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AritstItemInfo: typeof import('./src/components/artist-item/aritst-item-info.vue')['default']
     ArtistCate: typeof import('./src/components/artist/artist-cate.vue')['default']
+    ArtistItemAlbum: typeof import('./src/components/artist-item/artist-item-album.vue')['default']
+    ArtistItemInfo: typeof import('./src/components/artist-item/artist-item-info.vue')['default']
+    ArtistItemMv: typeof import('./src/components/artist-item/artist-item-mv.vue')['default']
+    ArtistItemSimi: typeof import('./src/components/artist-item/artist-item-simi.vue')['default']
     AudioList: typeof import('./src/components/zim-audio/audio-list.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -32,6 +37,7 @@ declare module '@vue/runtime-core' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTree: typeof import('element-plus/es')['ElTree']
+    IndexHeader: typeof import('./src/components/index/index-header.vue')['default']
     InfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
     LoginModal: typeof import('./src/components/login-modal/login-modal.vue')['default']

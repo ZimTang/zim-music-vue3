@@ -1,30 +1,8 @@
 import { defineStore } from 'pinia'
+import { IAudioItem, IAudioStoreState } from '@/models/audio'
 
-interface IAudioItem {
-  id: number
-}
-
-interface IAudioStoreState {
-  order: number
-  // 当前播放音乐的id
-  audioId: number
-  audioList: IAudioItem[]
-}
-
-interface IAudioStoreActions {
-  getCacheAudioId: () => void
-  getCacheAudioList: () => void
-  changeAudioList: (list: []) => void
-  changeAudio: (id: number) => void
-}
-
-const useAudioStore = defineStore<
-  string,
-  IAudioStoreState,
-  {},
-  IAudioStoreActions
->('audio', {
-  state() {
+const useAudioStore = defineStore('audio', {
+  state(): IAudioStoreState {
     return {
       order: 0,
       audioId: 0,
@@ -38,7 +16,7 @@ const useAudioStore = defineStore<
     getCacheAudioList() {
       this.audioList = JSON.parse(localStorage.getItem('audioList') || '[]')
     },
-    changeAudioList([...list]: []) {
+    changeAudioList([...list]: IAudioItem[]) {
       this.audioList = list
     },
     changeAudio(id: number) {

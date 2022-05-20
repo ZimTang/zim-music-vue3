@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { UserFilled } from '@element-plus/icons-vue'
 import useArtistStore from '@/stores/artist'
 import ArtistCate from '@/components/artist/artist-cate.vue'
@@ -31,7 +31,7 @@ watchEffect(async () => {
         v-for="artist in artistStore.artists"
         class="artist-item"
       >
-        <router-link to="/">
+        <router-link :to="'/artistItem/artistItemAlbum/' + artist.id">
           <el-image
             :src="artist.picUrl"
             class="artist-cover"
@@ -51,7 +51,7 @@ watchEffect(async () => {
 
 <style lang="scss">
 .artist {
-  padding: 0rem 5rem;
+  padding: 0rem 1rem;
   .artist-item {
     display: inline-block;
     position: relative;

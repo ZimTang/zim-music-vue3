@@ -42,7 +42,7 @@ defineComponent({
 
 <template>
   <el-container>
-    <el-header><zim-header /></el-header>
+    <el-header class="header"><zim-header /></el-header>
     <el-container class="main">
       <el-aside width="250px"><zim-aside /></el-aside>
       <el-container>
@@ -55,7 +55,7 @@ defineComponent({
         </el-main>
       </el-container>
     </el-container>
-    <el-footer>
+    <el-footer class="footer">
       <zim-audio />
     </el-footer>
   </el-container>
@@ -73,11 +73,17 @@ body {
 .el-header {
   padding: 0px;
 }
+.header {
+  height: 10vh;
+}
 .main {
   height: 78vh;
   .main-content {
     width: 95%;
     margin: 0 auto;
   }
+}
+.footer {
+  height: 10vh;
 }
 </style>

@@ -1,19 +1,19 @@
-import { IPlaylistItem } from '@/models/playlist'
+import { IGetPlaylistDataRes, IGetPlaylistInfoRes } from '@/models/playlist'
 import http from '@/utils/http'
 
-export const getPlaylistItem = (id: number): Promise<IPlaylistItem> => {
+export const getPlaylistData = (id: number): Promise<IGetPlaylistDataRes> => {
   return http.get('/playlist/detail', { params: { id } })
 }
 
-export const getPlaylistAllSong = (
+export const getPlaylistInfo = (
   id: number,
   limit?: number,
   offset?: number
-): Promise<any> => {
+): Promise<IGetPlaylistInfoRes> => {
   return http.get('/playlist/track/all', { params: { id, offset, limit } })
 }
 
 export default {
-  getPlaylistItem,
-  getPlaylistAllSong
+  getPlaylistData,
+  getPlaylistInfo
 }

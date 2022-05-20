@@ -32,9 +32,7 @@ watch(
 const initData = async () => {
   loading.value = true
   await playlistItemStore.getPlaylistItem(parseInt(route.params.id as string))
-  await playlistItemStore.getPlaylistAllSong(
-    parseInt(route.params.id as string)
-  )
+  await playlistItemStore.getPlaylistInfo(parseInt(route.params.id as string))
   loading.value = false
 }
 
@@ -44,32 +42,34 @@ const isCollapseOpen = ref(['0'])
 
 <template>
   <div class="song-sheet-item" ref="playlistItemRef" v-loading="loading">
-    <div class="header">
+    <div class="song-sheet-item-header">
       <div class="cover">
         <el-image
-          :src="playlistItemStore.playlistItem.playlist?.coverImgUrl"
+          :src="playlistItemStore.playlistItemInfo.playlist?.coverImgUrl"
           style="height: 18rem; border-radius: 10%"
         ></el-image>
       </div>
       <div class="info">
         <div class="title">
-          {{ playlistItemStore.playlistItem.playlist?.name }}
+          {{ playlistItemStore.playlistItemInfo.playlist?.name }}
         </div>
         <div class="creator">
           <div class="avatar">
             <el-image
-              :src="playlistItemStore.playlistItem.playlist?.creator.avatarUrl"
+              :src="
+                playlistItemStore.playlistItemInfo.playlist?.creator.avatarUrl
+              "
               style="height: 3rem; border-radius: 50%"
             ></el-image>
           </div>
           <div class="nickname">
-            {{ playlistItemStore.playlistItem.playlist?.creator.nickname }}
+            {{ playlistItemStore.playlistItemInfo.playlist?.creator.nickname }}
           </div>
           <div class="createTime">
             {{
-              dayjs(playlistItemStore.playlistItem.playlist?.createTime).format(
-                'YYYY-MM-DD'
-              )
+              dayjs(
+                playlistItemStore.playlistItemInfo.playlist?.createTime
+              ).format('YYYY-MM-DD')
             }}创建
           </div>
         </div>
@@ -86,11 +86,11 @@ const isCollapseOpen = ref(['0'])
         <div class="tag">
           <span>标签:</span>
           <span
-            v-for="(tag, index) in playlistItemStore.playlistItem.playlist
+            v-for="(tag, index) in playlistItemStore.playlistItemInfo.playlist
               ?.tags"
             >{{ tag }}
             {{
-              index === (playlistItemStore.playlistItem.playlist?.tags.length !- 1)
+              index === (playlistItemStore.playlistItemInfo?.playlist?.tags.length !- 1)
                 ? ''
                 : '/'
             }}</span
@@ -100,7 +100,8 @@ const isCollapseOpen = ref(['0'])
           <el-collapse v-model="isCollapseOpen" accordion>
             <el-collapse-item title="简介" name="1">
               {{
-                playlistItemStore.playlistItem.playlist?.description || '暂无'
+                playlistItemStore.playlistItemInfo.playlist?.description ||
+                '暂无'
               }}
             </el-collapse-item>
           </el-collapse>
@@ -108,7 +109,7 @@ const isCollapseOpen = ref(['0'])
       </div>
     </div>
     <div class="main">
-      <song-list :data="playlistItemStore.playlistSongs.songs" />
+      <song-list :data="playlistItemStore.playlistSongs" />
     </div>
   </div>
 </template>
@@ -117,7 +118,7 @@ const isCollapseOpen = ref(['0'])
 @import '@/assets/styles/base.scss';
 .song-sheet-item {
   width: 100%;
-  .header {
+  .song-sheet-item-header {
     width: 100%;
     display: flex;
     .info {

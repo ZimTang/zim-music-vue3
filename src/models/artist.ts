@@ -1,5 +1,3 @@
-import { IFetchData } from './apis'
-
 export interface IArtistCateItem {
   label: string
   value: string | number
@@ -12,7 +10,8 @@ export interface IArtist {
   accountId: number
 }
 
-export interface IGetTopArtistsRes extends IFetchData {
+export interface IGetTopArtistsRes {
+  code: number
   more: boolean
   artists: IArtist[]
 }

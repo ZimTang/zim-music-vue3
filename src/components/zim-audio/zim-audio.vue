@@ -27,8 +27,9 @@ const initAudio = async () => {
   if (!audioStore.audioId) {
     return
   }
-  currentAudioDetail.value = await songFetch.getSongDetail(audioStore.audioId)
-  const songUrl = await songFetch.getSongUrl(audioStore.audioId)
+
+  currentAudioDetail.value = await songFetch.getAudioDetail(audioStore.audioId)
+  const songUrl = await songFetch.getAudioUrl(audioStore.audioId)
   // 获取到当前歌曲的url
   currentAudioUrl.value = songUrl.data[0].url
   // 获取到当前歌曲的持续时间
@@ -49,9 +50,9 @@ const changeAudio = async () => {
   if (!audioStore.audioId) {
     return
   }
-  currentAudioDetail.value = await songFetch.getSongDetail(audioStore.audioId)
+  currentAudioDetail.value = await songFetch.getAudioDetail(audioStore.audioId)
   currentAudioUrl.value = await (
-    await songFetch.getSongUrl(audioStore.audioId)
+    await songFetch.getAudioUrl(audioStore.audioId)
   ).data[0].url
   currentAudioDetail.value.duration = timeToMinute(
     currentAudioDetail.value.songs[0]?.dt / 1000
@@ -227,11 +228,17 @@ const showAudioList = () => {
     align-items: center;
     .audio-cover {
       margin-right: 1rem;
-      height: 7vh;
+      width: 5rem;
+      height: 5rem;
       border-radius: 10%;
     }
     .audio-name {
+      width: 20rem;
       font-size: 1.4rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 1rem;
     }
     .audio-artist {
       font-size: 1.3rem;

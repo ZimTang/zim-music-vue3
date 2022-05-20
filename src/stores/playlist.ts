@@ -1,37 +1,9 @@
-import { playlist } from '@/apis'
 import { defineStore } from 'pinia'
+import { playlist } from '@/apis'
+import { IPlaylistStoreState } from '@/models/playlist'
 
-interface hotTag {
-  name: string
-}
-
-interface IPlaylistStore {
-  all: any
-  categories: any
-  sub: any
-  hotTags: hotTag[]
-  playlists: any[]
-  more: boolean
-  total: number
-}
-
-interface IPlaylistAction {
-  getPlaylistCateList: () => void
-  getPlaylistHotTags: () => void
-  getHighQuantityPlaylist: (
-    cat?: string,
-    limit?: number,
-    before?: number
-  ) => Promise<any>
-}
-
-const usePlaylistStore = defineStore<
-  string,
-  IPlaylistStore,
-  {},
-  IPlaylistAction
->('playlist', {
-  state() {
+const usePlaylistStore = defineStore('playlist', {
+  state(): IPlaylistStoreState {
     return {
       hotTags: [],
       all: {},
@@ -50,7 +22,7 @@ const usePlaylistStore = defineStore<
       this.categories = categories
     },
     async getPlaylistHotTags() {
-      this.hotTags = await (await playlist.getPlaylistHotTags()).tags
+      this.hotTags = (await playlist.getPlaylistHotTags()).tags
     },
     async getHighQuantityPlaylist(
       cat?: string,

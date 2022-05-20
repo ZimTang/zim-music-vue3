@@ -1,40 +1,20 @@
-import { playlistItemFetch } from '@/apis'
-import { IPlaylistItem } from '@/models/playlist'
 import { defineStore } from 'pinia'
+import { playlistItemFetch } from '@/apis'
+import { IPlaylistItemStoreState } from '@/models/playlist'
 
-interface IPlaylistStoreState {
-  playlistItem: Partial<IPlaylistItem>
-  playlistSongs: { songs: [] }
-}
-
-interface IPlaylistStoreActions {
-  getPlaylistItem: (id: number) => Promise<void>
-  getPlaylistAllSong: (
-    id: number,
-    limit?: number,
-    offset?: number
-  ) => Promise<void>
-}
-
-const playlistItemStore = defineStore<
-  string,
-  IPlaylistStoreState,
-  {},
-  IPlaylistStoreActions
->('playlistItem', {
-  state() {
+const playlistItemStore = defineStore('playlistItem', {
+  state(): IPlaylistItemStoreState {
     return {
-      playlistItem: {},
-      playlistSongs: { songs: [] }
+      playlistItemInfo: {},
+      playlistSongs: []
     }
   },
   actions: {
     async getPlaylistItem(id: number) {
-      this.playlistItem = await playlistItemFetch.getPlaylistItem(id)
+      this.playlistItemInfo = await playlistItemFetch.getPlaylistData(id)
     },
-    async getPlaylistAllSong(id: number) {
-      // @ts-ignore
-      this.playlistSongs = await playlistItemFetch.getPlaylistAllSong(id)
+    async getPlaylistInfo(id: number) {
+      this.playlistSongs = (await playlistItemFetch.getPlaylistInfo(id)).songs
     }
   }
 })

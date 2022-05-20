@@ -1,4 +1,10 @@
-import { ILoginModel, IUser } from '@/models/user'
+import {
+  IGetUserRecordRes,
+  IGetUserPlayListRes,
+  ILoginModel,
+  IUser,
+  IGetUserPersonalizedRes
+} from '@/models/user'
 import http from '@/utils/http'
 
 const login = (loginForm: ILoginModel): Promise<IUser> => {
@@ -9,15 +15,20 @@ const getUserDetail = (uid: number): Promise<IUser> => {
   return http.get('/user/detail', { params: { uid } })
 }
 
-const getUserRecord = (uid: number, type: number = 0): Promise<any> => {
+const getUserRecord = (
+  uid: number,
+  type: number = 0
+): Promise<IGetUserRecordRes> => {
   return http.get('/user/record', { params: { uid, type } })
 }
 
-const getUserPlayList = (uid: number): Promise<any> => {
+const getUserPlayList = (uid: number): Promise<IGetUserPlayListRes> => {
   return http.get('/user/playlist', { params: { uid } })
 }
 
-const getUserPersonalized = (limit?: number): Promise<any> => {
+const getUserPersonalized = (
+  limit?: number
+): Promise<IGetUserPersonalizedRes> => {
   return http.get('/personalized', { params: { limit } })
 }
 

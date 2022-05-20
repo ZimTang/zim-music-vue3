@@ -1,9 +1,9 @@
-import { userFetch } from '@/apis'
-import { IUser } from '@/models/user'
 import { defineStore } from 'pinia'
+import { userFetch } from '@/apis'
+import { IUserStoreState } from '@/models/user'
 
 const useUserStore = defineStore('user', {
-  state(): IUser {
+  state(): IUserStoreState {
     return {
       account: {},
       profile: {},
@@ -11,40 +11,36 @@ const useUserStore = defineStore('user', {
       token: '',
       records: [],
       playlist: [],
-      likelist: [],
       personalized: [],
       isAuth: false
     }
   },
   getters: {
-    userOwnerPlaylist: (state: IUser) => {
+    userOwnerPlaylist: (state: IUserStoreState) => {
       return state.playlist.filter((item) => {
         return item.creator.userId == state.profile.userId
       })
     },
-    userCollectedPlaylist: (state: IUser) => {
+    userCollectedPlaylist: (state: IUserStoreState) => {
       return state.playlist.filter((item) => {
         return item.creator.userId !== state.profile.userId
       })
     }
   },
   actions: {
-    changeProfile(profile: IUser['profile']) {
+    changeProfile(profile: IUserStoreState['profile']) {
       this.profile = profile
     },
     async getUserRecord(uid: number, type: number = 0) {
-      this.records = await (await userFetch.getUserRecord(uid, type)).allData
+      this.records = (await userFetch.getUserRecord(uid, type)).allData
     },
     async getUserPlayList() {
-      this.playlist = await (
+      this.playlist = (
         await userFetch.getUserPlayList(this.$state.profile.userId!)
       ).playlist
     },
     async getUserPersonalized(limit?: number) {
-      this.personalized = await (
-        await userFetch.getUserPersonalized(limit)
-      ).result
-      console.log(this.personalized)
+      this.personalized = (await userFetch.getUserPersonalized(limit)).result
     }
   }
 })

@@ -22,9 +22,9 @@ export const useAudio = (isNotClickAudioList: boolean = true) => {
     if (isNotClickAudioList) {
       localStorage.setItem(
         'audioList',
-        JSON.stringify(playlistItemStore.playlistSongs.songs)
+        JSON.stringify(playlistItemStore.playlistSongs)
       )
-      audioStore.changeAudioList(playlistItemStore.playlistSongs.songs)
+      audioStore.changeAudioList(playlistItemStore.playlistSongs)
     }
     changeOrder(audio)
     audioStore.audioId = audio.id
@@ -35,9 +35,9 @@ export const useAudio = (isNotClickAudioList: boolean = true) => {
   const handlePlayAll = () => {
     localStorage.setItem(
       'audioList',
-      JSON.stringify(playlistItemStore.playlistSongs.songs)
+      JSON.stringify(playlistItemStore.playlistSongs)
     )
-    audioStore.changeAudioList(playlistItemStore.playlistSongs.songs)
+    audioStore.changeAudioList(playlistItemStore.playlistSongs)
     localStorage.setItem('audioId', audioStore.audioList[0].id.toString())
     audioStore.audioId = audioStore.audioList[0].id
     audioStore.order = 1
