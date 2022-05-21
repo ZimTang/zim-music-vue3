@@ -66,7 +66,7 @@ $search-button-bg-color: #eaeaea;
 
   .logo {
     flex: 0.2;
-    height: 104%;
+    height: 100%;
     display: flex;
     align-items: center;
     background: url('@/assets/images/logo.png') no-repeat;

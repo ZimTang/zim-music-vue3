@@ -4,10 +4,12 @@ import { Star, Download } from '@element-plus/icons-vue'
 import { timeToMinute } from '@/utils/audio'
 import { useAudio } from '@/hooks/useAudio'
 
-defineProps({
-  data: Array
+const props = defineProps({
+  data: Array,
+  type: Number
 })
-const { playAudio } = useAudio()
+
+const { playAudio } = useAudio(true, props.type)
 </script>
 
 <template>

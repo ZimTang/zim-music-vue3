@@ -35,7 +35,7 @@ const { playAudio } = useAudio(false)
 
 <style lang="scss">
 .audio-list {
-  top: 6.5rem;
+  top: 7.5rem;
   right: 0;
   position: absolute;
   border-left: 1px solid rgb(233, 229, 229);

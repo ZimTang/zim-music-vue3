@@ -1,8 +1,6 @@
 <!-- 底部播放器 -->
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
-import { songFetch } from '@/apis'
-import { timeToMinute } from '@/utils/audio'
 import {
   VideoPlay,
   VideoPause,
@@ -10,7 +8,10 @@ import {
   CaretRight,
   SetUp
 } from '@element-plus/icons-vue'
+import { songFetch } from '@/apis'
+import { timeToMinute } from '@/utils/audio'
 import useAudioStore from '@/stores/audio'
+import AudioList from './audio-list.vue'
 
 const audioRef = ref<HTMLAudioElement | null>(null)
 const currentAudioDetail = ref<any>({})
@@ -133,6 +134,7 @@ const handleAudioEnd = () => {
   nextAudio()
 }
 const isAudioListShow = ref(false)
+
 // 展示播放列表
 const showAudioList = () => {
   isAudioListShow.value = !isAudioListShow.value

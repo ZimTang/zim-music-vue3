@@ -30,7 +30,7 @@ const config = [
 
 <template>
   <div class="index">
-    <link-header :config="config" />
+    <link-header :config="config" width="calc(100% - 20vw)" />
     <router-view></router-view>
   </div>
 </template>

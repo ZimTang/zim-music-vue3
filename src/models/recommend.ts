@@ -33,6 +33,8 @@ export interface IAlbum {
   blurPicUrl: string
   picUrl: string
   subType: string
+  publishTime: number
+  tags: []
 }
 
 export interface IGetBannersRes {

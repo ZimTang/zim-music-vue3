@@ -1,11 +1,19 @@
+import { PlaylistType } from '@/models/audio'
+import { ISong } from '@/models/playlist'
+import useAlbumStore from '@/stores/album'
 import useAudioStore from '@/stores/audio'
 import usePlaylistItemStore from '@/stores/playlist-item'
-export const useAudio = (isNotClickAudioList: boolean = true) => {
+
+export const useAudio = (
+  isNotClickAudioList: boolean = true,
+  type: PlaylistType = PlaylistType.playlist
+) => {
   const audioStore = useAudioStore()
   const playlistItemStore = usePlaylistItemStore()
+  const albumStore = useAlbumStore()
 
   // 改变排序
-  const changeOrder = (audio: any) => {
+  const changeOrder = (audio: ISong) => {
     audioStore.audioList.find((item, index) => {
       if (item.id == audio.id) {
         audioStore.order = index
@@ -16,19 +24,24 @@ export const useAudio = (isNotClickAudioList: boolean = true) => {
   }
 
   // 在歌单里播放单首歌曲
-  const playAudio = (audio: any) => {
+  const playAudio = (audio: ISong) => {
     if (audio.id === audioStore.audioId) return
-    // 判断是否点击的是播放列表里面的item
+    // 判断是否点击的是播放列表里面的item 而不是右侧弹出的当前播放列表的item
     if (isNotClickAudioList) {
-      localStorage.setItem(
-        'audioList',
-        JSON.stringify(playlistItemStore.playlistSongs)
-      )
-      audioStore.changeAudioList(playlistItemStore.playlistSongs)
+      if (type === PlaylistType.playlist) {
+        localStorage.setItem(
+          'audioList',
+          JSON.stringify(playlistItemStore.playlistSongs)
+        )
+        audioStore.changeAudioList(playlistItemStore.playlistSongs)
+      } else {
+        localStorage.setItem('audioList', JSON.stringify(albumStore.songs))
+        audioStore.changeAudioList(albumStore.songs)
+      }
     }
     changeOrder(audio)
     audioStore.audioId = audio.id
-    localStorage.setItem('audioId', audio.id)
+    localStorage.setItem('audioId', audio.id.toString())
   }
 
   // 播放全部

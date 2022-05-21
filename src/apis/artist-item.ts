@@ -1,4 +1,8 @@
-import { IGetArtistDetailRes, IGetArtistAlbumRes } from '@/models/artist-item'
+import {
+  IGetArtistDetailRes,
+  IGetArtistAlbumRes,
+  IGetArtistMvRes
+} from '@/models/artist-item'
 import http from '@/utils/http'
 
 const getArtistDetail = (id: number): Promise<IGetArtistDetailRes> => {
@@ -12,7 +16,12 @@ const getArtistAlbum = (
   return http.get('/artist/album', { params: { id, limit } })
 }
 
+const getArtistMv = (id: number): Promise<IGetArtistMvRes> => {
+  return http.get('/artist/mv', { params: { id } })
+}
+
 export default {
   getArtistDetail,
-  getArtistAlbum
+  getArtistAlbum,
+  getArtistMv
 }

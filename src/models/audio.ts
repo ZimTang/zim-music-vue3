@@ -1,5 +1,10 @@
 import { IPrivilege, ISong } from './playlist'
 
+export enum PlaylistType {
+  album,
+  playlist
+}
+
 export interface IAudioItem extends ISong {
   encodeType: string
   id: number
@@ -21,7 +26,7 @@ export interface IAudioStoreState {
   order: number
   // 当前播放音乐的id
   audioId: number
-  audioList: IAudioItem[]
+  audioList: ISong[]
 }
 
 export interface IAudioStoreActions {

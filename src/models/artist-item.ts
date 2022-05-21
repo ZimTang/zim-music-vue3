@@ -1,5 +1,5 @@
 import { IAlbum } from './recommend'
-import { IUser } from './user'
+import { IProfile, IUser } from './user'
 
 export interface IArtist {
   id: number
@@ -17,11 +17,22 @@ export interface IIdentify {
   imageDesc: string
 }
 
+export interface IMv {
+  id: number
+  artistName: string
+  imgurl: string
+  name: string
+  publishTime: string
+  duration: number
+  playCount: number
+  artist: IArtist
+}
+
 export interface IGetArtistDetailRes {
   code: number
   data: {
     artist: IArtist
-    user: IUser['profile']
+    user: IProfile
     identify: IIdentify
     videoCount: number
   }
@@ -34,10 +45,17 @@ export interface IGetArtistAlbumRes {
   more: true
 }
 
+export interface IGetArtistMvRes {
+  code: number
+  hasMore: true
+  mvs: IMv[]
+}
+
 export interface IArtistItemStore {
   artist: Partial<IArtist>
-  user: Partial<IUser['profile']>
+  user: Partial<IProfile>
   identify: Partial<IIdentify>
   videoCount: number
   hotAlbums: IAlbum[]
+  mvs: IMv[]
 }

@@ -25,7 +25,6 @@ export interface ISong {
   id: number
   name: string
   al: IAl
-  publishTime: string
 }
 
 export interface IPrivilege {}

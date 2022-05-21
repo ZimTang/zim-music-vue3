@@ -11,7 +11,6 @@ const artistItemStore = useArtistItemStore()
 
 onMounted(async () => {
   await artistItemStore.getArtistDetail(artistId)
-  await artistItemStore.getArtistAlbum(artistId)
 })
 
 const config = [
@@ -63,7 +62,11 @@ const config = [
       </div>
     </div>
     <link-header :config="config" width="calc(100% - 30vw)" />
-    <router-view></router-view>
+    <router-view style="margin-top: 3rem" v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
   </div>
 </template>
 
@@ -71,6 +74,7 @@ const config = [
 .artist-item {
   .artist-item-header {
     display: flex;
+    margin-bottom: 2rem;
     .cover {
       width: 20rem;
       height: 20rem;

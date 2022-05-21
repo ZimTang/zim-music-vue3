@@ -9,7 +9,8 @@ const useArtistItemStore = defineStore('artistItem', {
       identify: {},
       user: {},
       videoCount: 0,
-      hotAlbums: []
+      hotAlbums: [],
+      mvs: []
     }
   },
   actions: {
@@ -23,6 +24,10 @@ const useArtistItemStore = defineStore('artistItem', {
     async getArtistAlbum(id: number, limit: number = 30) {
       const res = await artistsItemFetch.getArtistAlbum(id, limit)
       this.hotAlbums = res.hotAlbums
+    },
+    async getArtistMv(id: number) {
+      const res = await artistsItemFetch.getArtistMv(id)
+      this.mvs = res.mvs
     }
   }
 })
