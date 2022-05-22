@@ -10,6 +10,8 @@ const props = defineProps<{
 const lyricRef = ref<any>(null)
 const lyricIndex = ref(0)
 const lyricArr = computed(() => {
+  console.log(props.currentAudioLyric)
+
   return props.currentAudioLyric?.lrc.lyric.split('\n')
 })
 
@@ -30,11 +32,6 @@ watch(
   }
 )
 
-/**
- *  如何高效找到currentTime当前播放时间 与 item里的那句话的时间相等？
- *  如果上面两个变量相等 那么就改变索引  通过索引判断这句话是否高亮
- **/
-
 // 改变当前播放的句子的样式
 watch(
   () => props.currentTime,
@@ -46,7 +43,7 @@ watch(
 // 跟随歌词自动滚动
 watch(lyricIndex, () => {
   if (lyricIndex.value > 4) {
-    // 减去前三个item的高度，让当前播放的歌词居中
+    // 减去前两个个item的高度，让当前播放的歌词居中
     lyricRef.value.setScrollTop(
       lyricRef.value.wrap$.children[0].children[lyricIndex.value].offsetTop -
         lyricRef.value.wrap$.children[0].children[lyricIndex.value - 1]
@@ -56,12 +53,18 @@ watch(lyricIndex, () => {
         lyricRef.value.wrap$.children[0].children[lyricIndex.value - 3]
           .offsetHeight -
         lyricRef.value.wrap$.children[0].children[lyricIndex.value - 4]
-          .offsetHeight -
-        lyricRef.value.wrap$.children[0].children[lyricIndex.value - 5]
           .offsetHeight
     )
-  } else {
   }
+})
+
+const showLyricArr = computed(() => {
+  const newArr: string[] = []
+  lyricArr.value?.map((item) => {
+    const res = item.lastIndexOf(']')
+    newArr.push(item.substring(res + 1))
+  })
+  return newArr
 })
 </script>
 
@@ -83,15 +86,11 @@ watch(lyricIndex, () => {
       <el-scrollbar class="lyric" ref="lyricRef">
         <div
           class="item"
-          v-for="(item, index) in lyricArr"
-          :key="item"
+          v-for="(item, index) in showLyricArr"
+          :key="index"
           :class="index === lyricIndex ? 'current' : ''"
         >
-          {{
-            item.substring(10)[0] !== ']'
-              ? item.substring(10)
-              : item.substring(11)
-          }}
+          {{ item }}
         </div>
       </el-scrollbar>
     </div>
@@ -103,13 +102,14 @@ watch(lyricIndex, () => {
 .audio-info {
   display: flex;
   justify-content: space-between;
-  top: 10%;
+  top: 0%;
   left: 0;
   position: absolute;
   background-image: linear-gradient(#f5f5f5, #fff);
-  height: 78vh;
+  height: calc(88vh - 4rem);
   width: 98.5vw;
   z-index: 999;
+  padding-top: 4rem;
   .left {
     width: 30%;
     height: 24rem;

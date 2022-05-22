@@ -225,12 +225,14 @@ const showAudioInfo = () => {
         <audio-list v-show="isAudioListShow" />
       </div>
     </div>
-    <audio-info
-      v-show="isAudioInfoShow"
-      :current-audio-detail="currentAudioDetail!"
-      :current-audio-lyric="currentAudioLyric!"
-      :current-time="currentTime"
-    />
+    <transition name="fade">
+      <audio-info
+        v-show="isAudioInfoShow"
+        :current-audio-detail="currentAudioDetail!"
+        :current-audio-lyric="currentAudioLyric!"
+        :current-time="currentTime"
+      />
+    </transition>
   </div>
 </template>
 
@@ -305,13 +307,15 @@ const showAudioInfo = () => {
   }
 }
 
-/* @keyframes audioInfoShowAnimation {
-  0%   {transl}
-  25%  {background-color: yellow;}
-  50%  {background-color: blue;}
-  100% {background-color: green;}
-} */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
 
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 .el-slider__button {
   height: 1rem;
   width: 1rem;
