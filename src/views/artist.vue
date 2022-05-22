@@ -58,7 +58,7 @@ watchEffect(async () => {
     width: 65%;
     transition: all 0.4s;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     .artist-cover {
       transition: all 0.4s;
       border-radius: 1rem;

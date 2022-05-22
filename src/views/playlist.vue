@@ -5,7 +5,7 @@ import RecommendSongs from '@/components/recommend/recommend-songs.vue'
 import usePlaylistStore from '@/stores/playlist'
 
 const playlistStore = usePlaylistStore()
-const limit = ref(18)
+const limit = ref(50)
 const offset = ref(1)
 const isLoading = ref(true)
 const currentTag = ref('华语')
@@ -13,29 +13,25 @@ const currentTag = ref('华语')
 onMounted(async () => {
   await playlistStore.getPlaylistCateList()
   await playlistStore.getPlaylistHotTags()
-  await playlistStore.getHighQuantityPlaylist(currentTag.value, limit.value)
+  await playlistStore.getHighQuantityPlaylist(currentTag.value)
   isLoading.value = false
 })
 
+// // 分页
 // watch(offset, async (newOffset, oldOffset) => {
 //   if (newOffset > oldOffset) {
 //     isLoading.value = true
-//     const lastItem = playlistStore.playlists[playlistStore.playlists.length - 1]
-//     await playlistStore.getHighQuantityPlaylist(
-//       currentTag.value,
-//       limit.value,
-//       lastItem.updateTime
-//     )
+//     await playlistStore.getHighQuantityPlaylist(currentTag.value)
 //     isLoading.value = false
 //   }
 // })
 
-// 分页
+// 切换标签
 watch(currentTag, async ([newCurrentTag, oldCurrentTag]) => {
   if (newCurrentTag !== oldCurrentTag) {
     offset.value = 1
     isLoading.value = true
-    await playlistStore.getHighQuantityPlaylist(currentTag.value, limit.value)
+    await playlistStore.getHighQuantityPlaylist(currentTag.value)
     isLoading.value = false
   }
 })
@@ -67,16 +63,21 @@ const handleChangePlaylist = (item: any) => {
     </div>
     <div class="list">
       <recommend-songs
-        :recommends="
-          playlistStore.playlists.slice(
-            limit * (offset - 1),
-            playlistStore.playlists.length
-          )
-        "
+        :recommends="playlistStore.playlists.slice(0, limit)"
         image-url-props="coverImgUrl"
       />
     </div>
-    <div class="pagination"></div>
+    <div class="pagination">
+      <!-- <el-pagination
+        v-model:current-page="offset"
+        v-model:page-size="limit"
+        small
+        background
+        layout="prev, pager, next"
+        :total="playlistStore.total"
+        class="mt-4"
+      /> -->
+    </div>
   </div>
 </template>
 
@@ -93,11 +94,12 @@ const handleChangePlaylist = (item: any) => {
       justify-content: center;
       align-items: center;
       font-size: 1.4rem;
-      width: 8rem;
+      padding: 0 2rem;
       height: 3rem;
       border: 1px solid rgb(209, 209, 209);
       border-radius: 2.5rem;
       .icon {
+        margin-left: 0.5rem;
         padding-top: 0.5rem;
       }
     }
@@ -117,7 +119,7 @@ const handleChangePlaylist = (item: any) => {
     }
   }
   .pagination {
-    margin-left: -20rem;
+    margin-left: -10rem;
     padding-bottom: 2rem;
     .el-pagination {
       display: flex;

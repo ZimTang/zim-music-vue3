@@ -16,6 +16,7 @@ onMounted(async () => {
     await userStore.getUserRecord(userStore.profile.userId!)
     // 获取用户歌单
     await userStore.getUserPlayList()
+    await userStore.getUserLikelist(userStore.profile.userId!)
   }
 })
 

@@ -11,15 +11,27 @@ export interface IAudioItem extends ISong {
   url: string
 }
 
+export interface Ilrc {
+  lyric: string
+  version: number
+}
+
 export interface IGetAudioDetailRes {
   code: number
   privileges: IPrivilege[]
   songs: ISong[]
+  duration: number | string
 }
 
 export interface IGetAudioUrlRes {
   code: number
   data: IAudioItem[]
+}
+
+export interface IGetAudioLyricRes {
+  code: number
+  lrc: Ilrc
+  tlyric: Ilrc
 }
 
 export interface IAudioStoreState {

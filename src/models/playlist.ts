@@ -1,3 +1,5 @@
+import { IArtist } from './artist'
+
 export interface IPlaylistCreator {
   userId: number
   avatarUrl: string
@@ -13,6 +15,8 @@ export interface IPlaylist {
   name: string
   description: string
   tags: string[]
+  updateTime: number
+  label: string
 }
 
 export interface IAl {
@@ -25,6 +29,8 @@ export interface ISong {
   id: number
   name: string
   al: IAl
+  dt: number
+  ar: IArtist[]
 }
 
 export interface IPrivilege {}

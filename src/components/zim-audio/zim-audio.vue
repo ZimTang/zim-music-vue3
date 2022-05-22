@@ -8,35 +8,46 @@ import {
   CaretRight,
   SetUp
 } from '@element-plus/icons-vue'
-import { songFetch } from '@/apis'
+import { audioFetch } from '@/apis'
 import { timeToMinute } from '@/utils/audio'
 import useAudioStore from '@/stores/audio'
 import AudioList from './audio-list.vue'
+import AudioInfo from './audio-info.vue'
+import { IGetAudioDetailRes, IGetAudioLyricRes } from '@/models/audio'
 
 const audioRef = ref<HTMLAudioElement | null>(null)
-const currentAudioDetail = ref<any>({})
+const currentAudioDetail = ref<IGetAudioDetailRes | null>(null)
 const currentAudioUrl = ref('')
+const currentAudioLyric = ref<IGetAudioLyricRes | null>(null)
 const volume = ref(0)
-const currentProgress = ref(0)
+const currentProgress = ref(0.5)
 const currentTime = ref('00:00')
 const isShowPlayIcon = ref(true)
 const isInit = ref(false)
 const audioStore = useAudioStore()
+const isAudioListShow = ref(false)
+const isAudioInfoShow = ref(false)
+
+const getAudio = async () => {
+  currentAudioDetail.value = await audioFetch.getAudioDetail(audioStore.audioId)
+  // 获取到当前歌曲的持续时间
+  currentAudioDetail.value.duration =
+    timeToMinute(currentAudioDetail.value.songs[0]?.dt / 1000) || '0'
+  // 获取到当前歌曲的url
+  currentAudioUrl.value = (
+    await audioFetch.getAudioUrl(audioStore.audioId)
+  ).data[0].url
+  currentAudioLyric.value = await audioFetch.getAudioLyric(audioStore.audioId)
+}
 
 // 初始化
 const initAudio = async () => {
+  audioStore.audioId = parseInt(localStorage.getItem('audioId') || '0')
+  audioStore.order = parseInt(localStorage.getItem('order') || '0')
   if (!audioStore.audioId) {
     return
   }
-
-  currentAudioDetail.value = await songFetch.getAudioDetail(audioStore.audioId)
-  const songUrl = await songFetch.getAudioUrl(audioStore.audioId)
-  // 获取到当前歌曲的url
-  currentAudioUrl.value = songUrl.data[0].url
-  // 获取到当前歌曲的持续时间
-  currentAudioDetail.value.duration = timeToMinute(
-    currentAudioDetail.value.songs[0]?.dt / 1000
-  )
+  await getAudio()
   if (audioRef.value) {
     audioRef.value.volume = 0.5
     volume.value = audioRef.value.volume * 100
@@ -48,16 +59,11 @@ const initAudio = async () => {
 const changeAudio = async () => {
   currentTime.value = '00:00'
   isShowPlayIcon.value = true
+  // 判断是否点击的是同一首歌曲
   if (!audioStore.audioId) {
     return
   }
-  currentAudioDetail.value = await songFetch.getAudioDetail(audioStore.audioId)
-  currentAudioUrl.value = await (
-    await songFetch.getAudioUrl(audioStore.audioId)
-  ).data[0].url
-  currentAudioDetail.value.duration = timeToMinute(
-    currentAudioDetail.value.songs[0]?.dt / 1000
-  )
+  await getAudio()
   if (isInit.value) {
     audioRef.value?.play()
   }
@@ -117,15 +123,17 @@ const prevAudio = () => {
     audioStore.audioId = audioStore.audioList[audioStore.order - 1].id
     --audioStore.order
     localStorage.setItem('order', audioStore.order.toString())
+    localStorage.setItem('audioId', audioStore.audioId.toString())
   }
 }
 
 // 下一首歌曲
 const nextAudio = () => {
-  if (audioStore.order < audioStore.audioList.length) {
+  if (audioStore.order + 1 < audioStore.audioList.length) {
     audioStore.audioId = audioStore.audioList[audioStore.order + 1].id
     ++audioStore.order
     localStorage.setItem('order', audioStore.order.toString())
+    localStorage.setItem('audioId', audioStore.audioId.toString())
   }
 }
 
@@ -133,11 +141,15 @@ const nextAudio = () => {
 const handleAudioEnd = () => {
   nextAudio()
 }
-const isAudioListShow = ref(false)
 
 // 展示播放列表
 const showAudioList = () => {
   isAudioListShow.value = !isAudioListShow.value
+}
+
+// 显示歌曲详情，歌曲详情组件包含歌词，评论等信息
+const showAudioInfo = () => {
+  isAudioInfoShow.value = !isAudioInfoShow.value
 }
 </script>
 
@@ -145,19 +157,20 @@ const showAudioList = () => {
   <div class="zim-audio">
     <div class="info">
       <el-image
-        v-if="Object.keys(currentAudioDetail).length !== 0"
+        @click="showAudioInfo"
+        v-if="Object.keys(currentAudioDetail || {}).length !== 0"
         class="audio-cover"
         :src="
-          currentAudioDetail.songs && currentAudioDetail.songs[0]?.al.picUrl
+          currentAudioDetail?.songs && currentAudioDetail.songs[0]?.al.picUrl
         "
       ></el-image>
       <div class="desc">
         <div class="audio-name">
-          {{ currentAudioDetail.songs && currentAudioDetail.songs[0]?.name }}
+          {{ currentAudioDetail?.songs && currentAudioDetail.songs[0]?.name }}
         </div>
         <div class="audio-artist">
           {{
-            currentAudioDetail.songs && currentAudioDetail.songs[0]?.ar[0].name
+            currentAudioDetail?.songs && currentAudioDetail.songs[0]?.ar[0].name
           }}
         </div>
       </div>
@@ -194,7 +207,7 @@ const showAudioList = () => {
           size="small"
           :show-tooltip="false"
         />
-        <div class="duration-times">{{ currentAudioDetail.duration }}</div>
+        <div class="duration-times">{{ currentAudioDetail?.duration }}</div>
       </div>
     </div>
     <div class="settings">
@@ -212,6 +225,12 @@ const showAudioList = () => {
         <audio-list v-show="isAudioListShow" />
       </div>
     </div>
+    <audio-info
+      v-show="isAudioInfoShow"
+      :current-audio-detail="currentAudioDetail!"
+      :current-audio-lyric="currentAudioLyric!"
+      :current-time="currentTime"
+    />
   </div>
 </template>
 
@@ -285,6 +304,13 @@ const showAudioList = () => {
     display: flex;
   }
 }
+
+/* @keyframes audioInfoShowAnimation {
+  0%   {transl}
+  25%  {background-color: yellow;}
+  50%  {background-color: blue;}
+  100% {background-color: green;}
+} */
 
 .el-slider__button {
   height: 1rem;

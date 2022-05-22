@@ -41,6 +41,9 @@ const useUserStore = defineStore('user', {
     },
     async getUserPersonalized(limit?: number) {
       this.personalized = (await userFetch.getUserPersonalized(limit)).result
+    },
+    async getUserLikelist(uid: number) {
+      const res = await userFetch.getUserLikelist(uid)
     }
   }
 })

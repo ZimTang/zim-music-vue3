@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { IAudioStoreState } from '@/models/audio'
 import { ISong } from '@/models/playlist'
+import { audioFetch } from '@/apis'
 
 const useAudioStore = defineStore('audio', {
   state(): IAudioStoreState {
@@ -18,8 +19,6 @@ const useAudioStore = defineStore('audio', {
       this.audioList = JSON.parse(localStorage.getItem('audioList') || '[]')
     },
     changeAudioList([...list]: ISong[]) {
-      console.log(list)
-
       this.audioList = list
     },
     changeAudio(id: number) {

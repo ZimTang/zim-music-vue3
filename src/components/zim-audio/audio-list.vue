@@ -35,15 +35,15 @@ const { playAudio } = useAudio(false)
 
 <style lang="scss">
 .audio-list {
-  top: 7.5rem;
+  top: 10%;
   right: 0;
   position: absolute;
   border-left: 1px solid rgb(233, 229, 229);
   width: 40rem;
   height: 77.5vh;
   overflow-y: scroll;
-  z-index: 88;
-  box-shadow: 10px 10px 10px 1px #eee;
+  z-index: 1000;
+  box-shadow: 10px 10px 10px 10px #eee;
   background-color: #fff;
   padding: 0 1.5rem;
   h2 {

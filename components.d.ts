@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     ArtistItemInfo: typeof import('./src/components/artist-item/artist-item-info.vue')['default']
     ArtistItemMv: typeof import('./src/components/artist-item/artist-item-mv.vue')['default']
     ArtistItemSimi: typeof import('./src/components/artist-item/artist-item-simi.vue')['default']
+    AudioInfo: typeof import('./src/components/zim-audio/audio-info.vue')['default']
     AudioList: typeof import('./src/components/zim-audio/audio-list.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']

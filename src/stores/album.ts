@@ -14,7 +14,6 @@ const useAlbumStore = defineStore('albumStore', {
       const res = await albumFetch.getAlbumContent(id)
       this.album = res.album
       this.songs = res.songs
-      console.log(res)
     }
   }
 })

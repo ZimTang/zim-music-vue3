@@ -24,12 +24,8 @@ const usePlaylistStore = defineStore('playlist', {
     async getPlaylistHotTags() {
       this.hotTags = (await playlist.getPlaylistHotTags()).tags
     },
-    async getHighQuantityPlaylist(
-      cat?: string,
-      limit?: number,
-      before?: number
-    ) {
-      const res = await playlist.getHighQuantityPlaylist(cat, limit, before)
+    async getHighQuantityPlaylist(cat?: string, limit?: number) {
+      const res = await playlist.getHighQuantityPlaylist(cat, limit)
       this.more = res.more
       this.playlists = res.playlists
       this.total = res.total

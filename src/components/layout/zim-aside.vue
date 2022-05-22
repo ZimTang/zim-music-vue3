@@ -62,31 +62,32 @@ const goToPlaylistItem = (node: any) => {
   <el-scrollbar>
     <div class="zim-aside">
       <router-link to="/" class="aside-item">发现音乐</router-link>
-      <router-link to="/" class="aside-item">播客</router-link>
       <router-link to="/" class="aside-item">视频</router-link>
       <router-link to="/" class="aside-item">关注</router-link>
-      <router-link to="/" class="aside-item">直播</router-link>
       <router-link to="/" class="aside-item">私人FM</router-link>
-      <el-tree
-        :data="playlistData"
-        :indent="0"
-        :props="defaultProps"
-        @node-click="goToPlaylistItem"
-      >
-        <template #default="{ node, data }">
-          <div class="custom-tree-node">
-            <div class="parent" v-if="data.children">{{ node.label }}</div>
-            <div class="children" v-if="!data.children">
-              <el-icon :size="20" style="margin-right: 0.7rem"
-                ><Service
-              /></el-icon>
-              <span>
-                {{ node.label }}
-              </span>
+      <router-link to="/" class="aside-item">喜欢的音乐</router-link>
+      <div class="userPlaylist">
+        <el-tree
+          :data="playlistData"
+          :indent="0"
+          :props="defaultProps"
+          @node-click="goToPlaylistItem"
+        >
+          <template #default="{ node, data }">
+            <div class="custom-tree-node">
+              <div class="parent" v-if="data.children">{{ node.label }}</div>
+              <div class="children" v-if="!data.children">
+                <el-icon :size="20" style="margin-right: 0.7rem"
+                  ><Service
+                /></el-icon>
+                <span>
+                  {{ node.label }}
+                </span>
+              </div>
             </div>
-          </div>
-        </template>
-      </el-tree>
+          </template>
+        </el-tree>
+      </div>
     </div>
   </el-scrollbar>
 </template>
@@ -115,6 +116,7 @@ const goToPlaylistItem = (node: any) => {
       background-color: #f5f5f5;
     }
   }
+
   .el-tree-node__content {
     height: 4rem;
     line-height: 4rem;

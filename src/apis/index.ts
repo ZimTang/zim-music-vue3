@@ -1,6 +1,6 @@
 import userFetch from './user'
 import recommendFetch from './recommend'
-import songFetch from './audio'
+import audioFetch from './audio'
 import playlistItemFetch from './playlist-item'
 import playlist from './playlist'
 import artistFetch from './artist'
@@ -10,7 +10,7 @@ import albumFetch from './album'
 export {
   userFetch,
   recommendFetch,
-  songFetch,
+  audioFetch,
   playlistItemFetch,
   playlist,
   artistFetch,

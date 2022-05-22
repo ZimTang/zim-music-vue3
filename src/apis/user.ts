@@ -32,10 +32,15 @@ const getUserPersonalized = (
   return http.get('/personalized', { params: { limit } })
 }
 
+const getUserLikelist = (uid: number): Promise<any> => {
+  return http.get('/likelist')
+}
+
 export default {
   login,
   getUserDetail,
   getUserRecord,
   getUserPlayList,
-  getUserPersonalized
+  getUserPersonalized,
+  getUserLikelist
 }
