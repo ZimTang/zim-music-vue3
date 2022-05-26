@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import useartistDetailStore from '@/stores/artist-item'
+import useartistDetailStore from '@/stores/artist-detail'
 
 const route = useRoute()
 const artistId = parseInt(route.params.id as string)

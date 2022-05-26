@@ -48,21 +48,22 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'artistDetailAlbum/:id',
         component: () =>
-          import('@/components/artist-item/artist-detail-album.vue')
+          import('@/components/artist-detail/artist-detail-album.vue')
       },
       {
         path: 'artistDetailMv/:id',
-        component: () => import('@/components/artist-item/artist-detail-mv.vue')
+        component: () =>
+          import('@/components/artist-detail/artist-detail-mv.vue')
       },
       {
         path: 'artistDetailInfo/:id',
         component: () =>
-          import('@/components/artist-item/artist-detail-info.vue')
+          import('@/components/artist-detail/artist-detail-info.vue')
       },
       {
         path: 'artistDetailSimi/:id',
         component: () =>
-          import('@/components/artist-item/artist-detail-simi.vue')
+          import('@/components/artist-detail/artist-detail-simi.vue')
       }
     ]
   },

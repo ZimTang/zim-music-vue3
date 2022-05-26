@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import useartistDetailStore from '@/stores/artist-item'
+import useartistDetailStore from '@/stores/artist-detail'
 
 const artistDetailStore = useartistDetailStore()
 const route = useRoute()

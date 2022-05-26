@@ -62,6 +62,7 @@ declare module '@vue/runtime-core' {
     ZimAside: typeof import('./src/components/layout/zim-aside.vue')['default']
     ZimAudio: typeof import('./src/components/zim-audio/zim-audio.vue')['default']
     ZimHeader: typeof import('./src/components/layout/zim-header.vue')['default']
+    ZimVideo: typeof import('./src/components/zim-video/zim-video.vue')['default']
   }
 }
 

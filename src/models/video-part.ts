@@ -37,6 +37,7 @@ export interface IVideoDetail {
   commentCount: number
   coverUrl: string
   description: string
+  durationms: number
   publishTime: number
   playTime: number
   shareCount: number
