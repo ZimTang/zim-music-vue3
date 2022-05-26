@@ -13,7 +13,7 @@ const loading = ref(true)
 const route = useRoute()
 const albumId = parseInt(route.params.id as string)
 const albumStore = useAlbumStore()
-const playlistItemRef = ref<HTMLElement | null>(null)
+const playlistDetailRef = ref<HTMLElement | null>(null)
 const { handlePlayAll } = useAudio(true, PlaylistType.album)
 
 onMounted(async () => {
@@ -41,7 +41,7 @@ const isCollapseOpen = ref(['0'])
 </script>
 
 <template>
-  <div class="song-sheet-item" ref="playlistItemRef" v-loading="loading">
+  <div class="song-sheet-item" ref="playlistDetailRef" v-loading="loading">
     <div class="song-sheet-item-header">
       <div class="cover">
         <el-image

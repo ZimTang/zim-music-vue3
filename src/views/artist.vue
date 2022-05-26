@@ -31,7 +31,7 @@ watchEffect(async () => {
         v-for="artist in artistStore.artists"
         class="artist-item"
       >
-        <router-link :to="'/artistItem/artistItemAlbum/' + artist.id">
+        <router-link :to="'/artistDetail/artistDetailAlbum/' + artist.id">
           <el-image
             :src="artist.picUrl"
             class="artist-cover"

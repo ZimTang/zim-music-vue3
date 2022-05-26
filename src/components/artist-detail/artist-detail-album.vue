@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import useArtistItemStore from '@/stores/artist-item'
+import useartistDetailStore from '@/stores/artist-item'
 
 const route = useRoute()
 const artistId = parseInt(route.params.id as string)
-const artistItemStore = useArtistItemStore()
+const artistDetailStore = useartistDetailStore()
 
 onMounted(async () => {
-  await artistItemStore.getArtistAlbum(artistId)
+  await artistDetailStore.getArtistAlbum(artistId)
 })
 </script>
 
 <template>
   <div class="artist-item-album">
     <el-row :gutter="30">
-      <el-col :span="3" v-for="item in artistItemStore.hotAlbums">
+      <el-col :span="3" v-for="item in artistDetailStore.hotAlbums">
         <router-link :to="'/album/' + item.id" class="item">
           <el-image :src="item.picUrl" class="cover"></el-image>
           <div class="name">{{ item.name }}</div>

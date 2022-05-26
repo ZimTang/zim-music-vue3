@@ -2,7 +2,7 @@ import {
   IGetArtistDetailRes,
   IGetArtistAlbumRes,
   IGetArtistMvRes
-} from '@/models/artist-item'
+} from '@/models/artist-detail'
 import http from '@/utils/http'
 
 const getArtistDetail = (id: number): Promise<IGetArtistDetailRes> => {

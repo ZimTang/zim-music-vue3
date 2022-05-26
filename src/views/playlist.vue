@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { ArrowRight } from '@element-plus/icons-vue'
-import RecommendSongs from '@/components/recommend/recommend-songs.vue'
 import usePlaylistStore from '@/stores/playlist'
+import ZimList from '@/common/zim-list.vue'
+import PlaylistItem from '@/components/playlist/playlist-item.vue'
+import ZimTagList from '@/common/zim-tag-list.vue'
 
 const playlistStore = usePlaylistStore()
 const limit = ref(50)
@@ -43,29 +44,24 @@ const handleChangePlaylist = (item: any) => {
 
 <template>
   <div class="playlist" v-loading="isLoading">
-    <div class="tags">
-      <div class="current-tag">
-        <span>
-          {{ currentTag }}
-        </span>
-        <div class="icon">
-          <el-icon><ArrowRight /></el-icon>
-        </div>
-      </div>
-      <div class="hot-tag">
-        <span
-          v-for="item in playlistStore.hotTags"
-          class="tag-link"
-          @click="handleChangePlaylist(item)"
-          >{{ item.name }}</span
-        >
-      </div>
-    </div>
+    <zim-tag-list
+      :current-tag="currentTag"
+      :tag-list="playlistStore.hotTags"
+      @change-current-tag="handleChangePlaylist"
+    />
     <div class="list">
-      <recommend-songs
-        :recommends="playlistStore.playlists.slice(0, limit)"
-        image-url-props="coverImgUrl"
-      />
+      <zim-list
+        :list-data="playlistStore.playlists.slice(0, limit)"
+        :span="4"
+        :gutter="30"
+      >
+        <template v-slot="{ item }">
+          <playlist-item
+            :item="item"
+            image-url-props="coverImgUrl"
+          ></playlist-item>
+        </template>
+      </zim-list>
     </div>
     <div class="pagination">
       <!-- <el-pagination
@@ -115,6 +111,14 @@ const handleChangePlaylist = (item: any) => {
       }
       .tag-link:hover {
         cursor: default;
+      }
+      .active-tag {
+        padding: 0.5rem 1.5rem;
+        border-radius: 10%;
+        text-align: center;
+        display: inline-block;
+        background-color: #fcebeb;
+        color: $primary-color;
       }
     }
   }

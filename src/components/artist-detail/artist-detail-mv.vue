@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import useArtistItemStore from '@/stores/artist-item'
+import useartistDetailStore from '@/stores/artist-item'
 
-const artistItemStore = useArtistItemStore()
+const artistDetailStore = useartistDetailStore()
 const route = useRoute()
 const artistId = parseInt(route.params.id as string)
 
 onMounted(async () => {
-  await artistItemStore.getArtistMv(artistId)
+  await artistDetailStore.getArtistMv(artistId)
 })
 </script>
 
 <template>
   <div class="artist-item-mv">
     <el-row :gutter="30">
-      <el-col :span="3" v-for="item in artistItemStore.mvs">
+      <el-col :span="4" v-for="item in artistDetailStore.mvs">
         <!-- todo -->
         <router-link to="/" class="item">
-          <el-image :src="item.imgurl" class="cover" fit="contain"></el-image>
-          <div>{{ item.name }}</div>
+          <el-image :src="item.imgurl" class="cover" fit="fill"></el-image>
+          <div class="name">{{ item.name }}</div>
         </router-link>
       </el-col>
     </el-row>
@@ -31,7 +31,16 @@ onMounted(async () => {
   .item {
     display: block;
     .cover {
+      width: 14rem;
+      height: 10rem;
       border-radius: 10%;
+    }
+    .name {
+      margin: 1rem 0;
+      font-size: 1.4rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

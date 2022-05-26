@@ -2,14 +2,14 @@ import { PlaylistType } from '@/models/audio'
 import { ISong } from '@/models/playlist'
 import useAlbumStore from '@/stores/album'
 import useAudioStore from '@/stores/audio'
-import usePlaylistItemStore from '@/stores/playlist-item'
+import useplaylistDetailStore from '@/stores/playlist-detail'
 
 export const useAudio = (
   isNotClickAudioList: boolean = true,
   type: PlaylistType = PlaylistType.playlist
 ) => {
   const audioStore = useAudioStore()
-  const playlistItemStore = usePlaylistItemStore()
+  const playlistDetailStore = useplaylistDetailStore()
   const albumStore = useAlbumStore()
 
   // 改变排序
@@ -31,9 +31,9 @@ export const useAudio = (
       if (type === PlaylistType.playlist) {
         localStorage.setItem(
           'audioList',
-          JSON.stringify(playlistItemStore.playlistSongs)
+          JSON.stringify(playlistDetailStore.playlistSongs)
         )
-        audioStore.changeAudioList(playlistItemStore.playlistSongs)
+        audioStore.changeAudioList(playlistDetailStore.playlistSongs)
       } else {
         localStorage.setItem('audioList', JSON.stringify(albumStore.songs))
         audioStore.changeAudioList(albumStore.songs)
@@ -48,9 +48,9 @@ export const useAudio = (
   const handlePlayAll = () => {
     localStorage.setItem(
       'audioList',
-      JSON.stringify(playlistItemStore.playlistSongs)
+      JSON.stringify(playlistDetailStore.playlistSongs)
     )
-    audioStore.changeAudioList(playlistItemStore.playlistSongs)
+    audioStore.changeAudioList(playlistDetailStore.playlistSongs)
     localStorage.setItem('audioId', audioStore.audioList[0].id.toString())
     audioStore.audioId = audioStore.audioList[0].id
     audioStore.order = 1

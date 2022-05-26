@@ -105,7 +105,7 @@ export interface IPlaylistStoreState {
   total: number
 }
 
-export interface IPlaylistItemStoreState {
-  playlistItemInfo: Partial<IGetPlaylistDataRes>
+export interface IplaylistDetailStoreState {
+  playlistDetailInfo: Partial<IGetPlaylistDataRes>
   playlistSongs: ISong[]
 }

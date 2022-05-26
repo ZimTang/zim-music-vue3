@@ -37,36 +37,42 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/private-content.vue')
   },
   {
-    path: '/playlistItem/:id',
-    component: () => import('@/views/playlist-item.vue')
+    path: '/playlistDetail/:id',
+    component: () => import('@/views/playlist-detail.vue')
   },
   {
-    path: '/artistItem',
-    component: () => import('@/views/artist-item.vue'),
-    redirect: '/artistItem/artistItemAlbum/:id',
+    path: '/artistDetail',
+    component: () => import('@/views/artist-detail.vue'),
+    redirect: '/artistDetail/artistDetailAlbum/:id',
     children: [
       {
-        path: 'artistItemAlbum/:id',
+        path: 'artistDetailAlbum/:id',
         component: () =>
-          import('@/components/artist-item/artist-item-album.vue')
+          import('@/components/artist-item/artist-detail-album.vue')
       },
       {
-        path: 'artistItemMv/:id',
-        component: () => import('@/components/artist-item/artist-item-mv.vue')
+        path: 'artistDetailMv/:id',
+        component: () => import('@/components/artist-item/artist-detail-mv.vue')
       },
       {
-        path: 'artistItemInfo/:id',
-        component: () => import('@/components/artist-item/artist-item-info.vue')
+        path: 'artistDetailInfo/:id',
+        component: () =>
+          import('@/components/artist-item/artist-detail-info.vue')
       },
       {
-        path: 'artistItemSimi/:id',
-        component: () => import('@/components/artist-item/artist-item-simi.vue')
+        path: 'artistDetailSimi/:id',
+        component: () =>
+          import('@/components/artist-item/artist-detail-simi.vue')
       }
     ]
   },
   {
     path: '/album/:id',
     component: () => import('@/views/album.vue')
+  },
+  {
+    path: '/videoList',
+    component: () => import('@/views/video-list.vue')
   }
 ]
 

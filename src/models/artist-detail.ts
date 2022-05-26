@@ -51,7 +51,7 @@ export interface IGetArtistMvRes {
   mvs: IMv[]
 }
 
-export interface IArtistItemStore {
+export interface IartistDetailStore {
   artist: Partial<IArtist>
   user: Partial<IProfile>
   identify: Partial<IIdentify>

@@ -3,15 +3,15 @@
 import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { Headset } from '@element-plus/icons-vue'
-import usePlaylistItemStore from '@/stores/playlist-item'
+import useplaylistDetailStore from '@/stores/playlist-detail'
 import dayjs from 'dayjs'
 import SongList from '@/common/song-list.vue'
 import { useAudio } from '@/hooks/useAudio'
 
 const loading = ref(true)
 const route = useRoute()
-const playlistItemStore = usePlaylistItemStore()
-const playlistItemRef = ref<HTMLElement | null>(null)
+const playlistDetailStore = useplaylistDetailStore()
+const playlistDetailRef = ref<HTMLElement | null>(null)
 const { handlePlayAll } = useAudio()
 
 onMounted(async () => {
@@ -24,15 +24,17 @@ watch(
   () => {
     initData()
     // TODO:重新请求后，滚动到顶部
-    playlistItemRef.value?.scrollTo(0, 0)
+    playlistDetailRef.value?.scrollTo(0, 0)
   }
 )
 
 // 初始化数据
 const initData = async () => {
   loading.value = true
-  await playlistItemStore.getPlaylistItem(parseInt(route.params.id as string))
-  await playlistItemStore.getPlaylistInfo(parseInt(route.params.id as string))
+  await playlistDetailStore.getplaylistDetail(
+    parseInt(route.params.id as string)
+  )
+  await playlistDetailStore.getPlaylistInfo(parseInt(route.params.id as string))
   loading.value = false
 }
 
@@ -41,34 +43,37 @@ const isCollapseOpen = ref(['0'])
 </script>
 
 <template>
-  <div class="song-sheet-item" ref="playlistItemRef" v-loading="loading">
+  <div class="song-sheet-item" ref="playlistDetailRef" v-loading="loading">
     <div class="song-sheet-item-header">
       <div class="cover">
         <el-image
-          :src="playlistItemStore.playlistItemInfo.playlist?.coverImgUrl"
+          :src="playlistDetailStore.playlistDetailInfo.playlist?.coverImgUrl"
           style="height: 18rem; border-radius: 10%"
         ></el-image>
       </div>
       <div class="info">
         <div class="title">
-          {{ playlistItemStore.playlistItemInfo.playlist?.name }}
+          {{ playlistDetailStore.playlistDetailInfo.playlist?.name }}
         </div>
         <div class="creator">
           <div class="avatar">
             <el-image
               :src="
-                playlistItemStore.playlistItemInfo.playlist?.creator.avatarUrl
+                playlistDetailStore.playlistDetailInfo.playlist?.creator
+                  .avatarUrl
               "
               style="height: 3rem; border-radius: 50%"
             ></el-image>
           </div>
           <div class="nickname">
-            {{ playlistItemStore.playlistItemInfo.playlist?.creator.nickname }}
+            {{
+              playlistDetailStore.playlistDetailInfo.playlist?.creator.nickname
+            }}
           </div>
           <div class="createTime">
             {{
               dayjs(
-                playlistItemStore.playlistItemInfo.playlist?.createTime
+                playlistDetailStore.playlistDetailInfo.playlist?.createTime
               ).format('YYYY-MM-DD')
             }}创建
           </div>
@@ -86,11 +91,11 @@ const isCollapseOpen = ref(['0'])
         <div class="tag">
           <span>标签:</span>
           <span
-            v-for="(tag, index) in playlistItemStore.playlistItemInfo.playlist
-              ?.tags"
+            v-for="(tag, index) in playlistDetailStore.playlistDetailInfo
+              .playlist?.tags"
             >{{ tag }}
             {{
-              index === (playlistItemStore.playlistItemInfo?.playlist?.tags.length !- 1)
+              index === (playlistDetailStore.playlistDetailInfo?.playlist?.tags.length !- 1)
                 ? ''
                 : '/'
             }}</span
@@ -100,7 +105,7 @@ const isCollapseOpen = ref(['0'])
           <el-collapse v-model="isCollapseOpen" accordion>
             <el-collapse-item title="简介" name="1">
               {{
-                playlistItemStore.playlistItemInfo.playlist?.description ||
+                playlistDetailStore.playlistDetailInfo.playlist?.description ||
                 '暂无'
               }}
             </el-collapse-item>
@@ -109,7 +114,7 @@ const isCollapseOpen = ref(['0'])
       </div>
     </div>
     <div class="main">
-      <song-list :data="playlistItemStore.playlistSongs" />
+      <song-list :data="playlistDetailStore.playlistSongs" />
     </div>
   </div>
 </template>

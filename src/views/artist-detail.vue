@@ -2,32 +2,32 @@
 import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { FolderAdd } from '@element-plus/icons-vue'
-import useArtistItemStore from '@/stores/artist-item'
+import useartistDetailStore from '@/stores/artist-item'
 import LinkHeader from '@/common/link-header.vue'
 
 const route = useRoute()
 const artistId = parseInt(route.params.id as string)
-const artistItemStore = useArtistItemStore()
+const artistDetailStore = useartistDetailStore()
 
 onMounted(async () => {
-  await artistItemStore.getArtistDetail(artistId)
+  await artistDetailStore.getArtistDetail(artistId)
 })
 
 const config = [
   {
-    to: '/artistItem/artistItemAlbum/' + artistId,
+    to: '/artistDetail/artistDetailAlbum/' + artistId,
     text: '专辑'
   },
   {
-    to: '/artistItem/artistItemMv/' + artistId,
+    to: '/artistDetail/artistDetailMv/' + artistId,
     text: 'MV'
   },
   {
-    to: '/artistItem/artistItemInfo/' + artistId,
+    to: '/artistDetail/artistDetailInfo/' + artistId,
     text: '歌手详情'
   },
   {
-    to: '/artistItem/artistItemSimi/' + artistId,
+    to: '/artistDetail/artistDetailSimi/' + artistId,
     text: '相似歌手'
   }
 ]
@@ -37,16 +37,16 @@ const config = [
   <div class="artist-item">
     <div class="artist-item-header">
       <el-image
-        :src="artistItemStore.artist.cover"
+        :src="artistDetailStore.artist.cover"
         class="cover"
         fit="cover"
       ></el-image>
       <div class="info">
         <div class="nickname">
-          {{ artistItemStore.artist.name }}
+          {{ artistDetailStore.artist.name }}
         </div>
         <div class="description">
-          {{ artistItemStore.identify?.imageDesc }}
+          {{ artistDetailStore.identify?.imageDesc }}
         </div>
         <div class="action">
           <div class="icon">
@@ -55,9 +55,9 @@ const config = [
           <div>收藏</div>
         </div>
         <div class="song">
-          <div>单曲数:{{ artistItemStore.artist.musicSize }}</div>
-          <div>专辑数:{{ artistItemStore.artist.albumSize }}</div>
-          <div>MV数:{{ artistItemStore.artist.mvSize }}</div>
+          <div>单曲数:{{ artistDetailStore.artist.musicSize }}</div>
+          <div>专辑数:{{ artistDetailStore.artist.albumSize }}</div>
+          <div>MV数:{{ artistDetailStore.artist.mvSize }}</div>
         </div>
       </div>
     </div>

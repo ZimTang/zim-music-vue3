@@ -8,35 +8,38 @@ const { playAudio } = useAudio(false)
 </script>
 
 <template>
-  <div class="audio-list">
-    <h2>当前播放</h2>
-    <span class="total">总{{ audioStore.audioList.length }}首</span>
-    <div>
-      <el-table :data="audioStore.audioList" @row-click="playAudio">
-        <el-table-column prop="name">
-          <template #default="scope">
-            <span>{{ scope.row.name }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="ar[0].name">
-          <template #default="scope">
-            <span>{{ scope.row.ar[0].name }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column prop="dt">
-          <template #default="scope">
-            <span>{{ timeToMinute(scope.row.dt / 1000) }}</span>
-          </template>
-        </el-table-column>
-      </el-table>
+  <transition name="fade">
+    <div class="audio-list">
+      <h2>当前播放</h2>
+      <span class="total">总{{ audioStore.audioList.length }}首</span>
+      <div>
+        <el-table :data="audioStore.audioList" @row-click="playAudio">
+          <el-table-column prop="name">
+            <template #default="scope">
+              <span>{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="ar[0].name">
+            <template #default="scope">
+              <span>{{ scope.row.ar[0].name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="dt">
+            <template #default="scope">
+              <span>{{ timeToMinute(scope.row.dt / 1000) }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <style lang="scss">
 .audio-list {
   top: 10%;
   right: 0;
+  border-radius: 1.5rem;
   position: absolute;
   border-left: 1px solid rgb(233, 229, 229);
   width: 40rem;

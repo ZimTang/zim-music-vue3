@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { artistsItemFetch } from '@/apis'
-import { IArtistItemStore } from '@/models/artist-item'
+import { IartistDetailStore } from '@/models/artist-detail'
 
-const useArtistItemStore = defineStore('artistItem', {
-  state(): IArtistItemStore {
+const useartistDetailStore = defineStore('artistDetail', {
+  state(): IartistDetailStore {
     return {
       artist: {},
       identify: {},
@@ -32,4 +32,4 @@ const useArtistItemStore = defineStore('artistItem', {
   }
 })
 
-export default useArtistItemStore
+export default useartistDetailStore
