@@ -4,8 +4,10 @@ import audioFetch from './audio'
 import playlistDetailFetch from './playlist-detail'
 import playlist from './playlist'
 import artistFetch from './artist'
-import artistsItemFetch from './artist-item'
+import artistsItemFetch from './artist-detail'
 import albumFetch from './album'
+import videoPartFetch from './video-part'
+import mvFetch from './mv'
 
 export {
   userFetch,
@@ -15,5 +17,7 @@ export {
   playlist,
   artistFetch,
   artistsItemFetch,
-  albumFetch
+  albumFetch,
+  videoPartFetch,
+  mvFetch
 }

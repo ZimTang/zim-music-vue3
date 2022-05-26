@@ -10,8 +10,6 @@ const props = defineProps<{
 const lyricRef = ref<any>(null)
 const lyricIndex = ref(0)
 const lyricArr = computed(() => {
-  console.log(props.currentAudioLyric)
-
   return props.currentAudioLyric?.lrc.lyric.split('\n')
 })
 

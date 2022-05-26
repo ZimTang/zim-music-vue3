@@ -2,7 +2,7 @@
 import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { FolderAdd } from '@element-plus/icons-vue'
-import useartistDetailStore from '@/stores/artist-item'
+import useartistDetailStore from '@/stores/artist-detail'
 import LinkHeader from '@/common/link-header.vue'
 
 const route = useRoute()

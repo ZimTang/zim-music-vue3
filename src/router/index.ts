@@ -71,8 +71,23 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/album.vue')
   },
   {
-    path: '/videoList',
-    component: () => import('@/views/video-list.vue')
+    path: '/videoPart/',
+    component: () => import('@/views/video-part.vue'),
+    redirect: '/videoPart/video',
+    children: [
+      {
+        path: '/videoPart/video',
+        component: () => import('@/components/video-part/video-part-video.vue')
+      },
+      {
+        path: '/videoPart/mv',
+        component: () => import('@/components/video-part/video-part-mv.vue')
+      }
+    ]
+  },
+  {
+    path: '/videoDetail/:vid',
+    component: () => import('@/views/video-detail.vue')
   }
 ]
 

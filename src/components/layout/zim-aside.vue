@@ -62,7 +62,7 @@ const goToplaylistDetail = (node: any) => {
   <el-scrollbar>
     <div class="zim-aside">
       <router-link to="/" class="aside-item">发现音乐</router-link>
-      <router-link to="/videoList" class="aside-item">视频</router-link>
+      <router-link to="/videoPart" class="aside-item">视频</router-link>
       <router-link to="/" class="aside-item">关注</router-link>
       <router-link to="/" class="aside-item">私人FM</router-link>
       <router-link to="/" class="aside-item">喜欢的音乐</router-link>

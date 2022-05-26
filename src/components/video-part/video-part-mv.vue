@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="video-list">123</div>
+  <div>456</div>
 </template>
 
 <style lang="scss"></style>
