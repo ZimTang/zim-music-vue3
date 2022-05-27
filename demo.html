@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Full Screen Video Toggle</title>
+    <style>
+      .vidFrame {
+        position: relative;
+        top: 10%;
+        width: 320px;
+        height: auto;
+        min-height: 180px;
+        outline: 1px dashed red;
+      }
+
+      .vidBar {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: 40px;
+        width: 99%;
+      }
+
+      #fullScreen {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        outline: none;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        display: block;
+        cursor: pointer;
+      }
+
+      #fullScreen:hover {
+        border: 1px groove #0ef;
+      }
+      .on,
+      .off {
+        background: url('https://i.imgur.com/0FTwh6M.png') no-repeat;
+        width: 36px;
+        height: 36px;
+      }
+      .off {
+        background-position: 0 0;
+      }
+      .on {
+        background-position: -1px -50px;
+      }
+
+      #playPause {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 36px;
+        height: 36px;
+        background: none;
+        font-size: 36px;
+        color: #0ff;
+        line-height: 1;
+        border: 1px solid transparent;
+        display: block;
+        cursor: pointer;
+        outline: none;
+      }
+      #playPause.play:before {
+        content: '\25b6';
+      }
+      #playPause.pause:before {
+        content: '\275a\275a';
+      }
+
+      .vid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        display: block;
+        z-index: 1;
+        outline: 1px dotted blue;
+      }
+      /*
+Fullscreen Pseudo-class:
+https://developer.mozilla.org/en-US/docs/Web/CSS/:fullscreen
+*/
+      .vidBar:-moz-full-screen {
+        position: fixed;
+      }
+      .vidBar:-webkit-full-screen {
+        position: fixed;
+      }
+      .vidBar:-ms-fullscreen {
+        position: fixed;
+      }
+      .vidBar:fullscreen {
+        position: fixed;
+      }
+      /*
+Special Shadow DOM Settings to Override Default Controls:
+https://css-tricks.com/custom-controls-in-html5-video-full-screen/
+*/
+      video::-webkit-media-controls-enclosure {
+        display: none !important;
+      }
+      .vidBar {
+        z-index: 2147483648;
+      }
+    </style>
+  </head>
+
+  <body>
+    <figure class="vidFrame">
+      <video
+        id="vid1"
+        class="vid"
+        src="http://techslides.com/demos/sample-videos/small.mp4"
+      ></video>
+      <figcaption class="vidBar">
+        <button id="playPause" class="play" title="Play/Pause Video"></button>
+        <button
+          id="fullScreen"
+          class="on"
+          title="Enter/Exit Full Screen"
+        ></button>
+      </figcaption>
+    </figure>
+    <script>
+      /*
+Toggle Button with classList:
+https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
+*/
+      var fullBtn = document.getElementById('fullScreen')
+      var playBtn = document.getElementById('playPause')
+
+      playBtn.addEventListener(
+        'click',
+        function (event) {
+          var player = document.getElementById('vid1')
+
+          if (player.paused) {
+            playBtn.classList.remove('play')
+            playBtn.classList.add('pause')
+            player.play()
+          } else {
+            playBtn.classList.add('play')
+            playBtn.classList.remove('pause')
+            player.pause()
+          }
+        },
+        false
+      )
+
+      fullBtn.addEventListener(
+        'click',
+        function (event) {
+          var tgtEle = document.querySelector('.vidFrame')
+          var onOrOff = fullBtn.classList.contains('on')
+
+          if (onOrOff) {
+            enterFS(tgtEle)
+            fullBtn.classList.remove('on')
+            fullBtn.classList.add('off')
+          } else {
+            exitFS()
+            fullBtn.classList.add('on')
+            fullBtn.classList.remove('off')
+          }
+        },
+        false
+      )
+
+      /*
+Fullscreen API:
+https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+*/
+      function enterFS(element) {
+        if (element.requestFullscreen) {
+          element.requestFullscreen()
+        } else if (element.msRequestFullscreen) {
+          element.msRequestFullscreen()
+        } else if (element.mozRequestFullScreen) {
+          element.mozRequestFullScreen()
+        } else if (element.webkitRequestFullscreen) {
+          element.webkitRequestFullscreen()
+        }
+      }
+
+      function exitFS() {
+        if (document.exitFullscreen) {
+          document.exitFullscreen()
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen()
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen()
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen()
+        }
+      }
+    </script>
+  </body>
+</html>

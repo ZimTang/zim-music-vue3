@@ -3,24 +3,12 @@ import { ref, watch } from 'vue'
 import { VideoPlay, VideoPause } from '@element-plus/icons-vue'
 import { timeToMinute } from '@/utils/audio'
 import useVideoPartStore from '@/stores/video-part'
-const videoRef = ref<HTMLVideoElement | null>(null)
+
 const emits = defineEmits(['changeVideoState'])
 const props = defineProps({
   url: String,
   isVideoPause: Boolean
 })
-const videoPartStore = useVideoPartStore()
-const currentTime = ref('00:00')
-const currentProgress = ref(0)
-const volume = ref(0)
-const playVideo = () => {
-  videoRef.value?.play()
-  emits('changeVideoState', false)
-}
-const pauseVideo = () => {
-  videoRef.value?.pause()
-  emits('changeVideoState', true)
-}
 
 watch(
   () => props.url,
@@ -29,6 +17,31 @@ watch(
     currentProgress.value = 0
   }
 )
+
+watch(
+  () => videoRef.value?.paused,
+  (newValue) => {
+    emits('changeVideoState', newValue)
+  }
+)
+
+const videoPartStore = useVideoPartStore()
+const videoRef = ref<HTMLVideoElement | null>(null)
+const vidFrameRef = ref<HTMLElement | null>(null)
+const isFullScreen = ref(false)
+const currentTime = ref('00:00')
+const currentProgress = ref(0)
+const volume = ref(50)
+
+const playVideo = () => {
+  videoRef.value?.play()
+  emits('changeVideoState', false)
+}
+
+const pauseVideo = () => {
+  videoRef.value?.pause()
+  emits('changeVideoState', true)
+}
 
 const watchCurrentTimeChange = () => {
   if (videoRef.value && !isNaN(videoRef.value.duration)) {
@@ -46,8 +59,14 @@ const changeProgress = (val: number) => {
 }
 
 const handleFullScreen = () => {
-  if (videoRef.value) {
-    videoRef.value.requestFullscreen()
+  if (vidFrameRef.value) {
+    if (!isFullScreen.value) {
+      vidFrameRef.value.requestFullscreen()
+      isFullScreen.value = true
+    } else {
+      document.exitFullscreen()
+      isFullScreen.value = false
+    }
   }
 }
 
@@ -60,15 +79,14 @@ const changeVolume = (val: number) => {
 </script>
 
 <template>
-  <div class="zim-video">
+  <figure class="vidFrame" ref="vidFrameRef">
     <video
       :src="url"
       class="video"
       ref="videoRef"
-      disablePictureInPicture
       @timeupdate="watchCurrentTimeChange"
     ></video>
-    <div class="controls">
+    <figcaption class="vidBar">
       <div class="left">
         <div class="action">
           <el-icon
@@ -96,7 +114,6 @@ const changeVolume = (val: number) => {
           </span>
         </div>
       </div>
-
       <div class="center">
         <div class="progress">
           <el-slider
@@ -112,7 +129,7 @@ const changeVolume = (val: number) => {
           <el-slider
             v-model="volume"
             vertical
-            height="15px"
+            height="2rem"
             style="width: 10px"
             @input="changeVolume"
           />
@@ -121,96 +138,127 @@ const changeVolume = (val: number) => {
           <img
             src="@/assets/images/fullscreen.png"
             class="fullscreen"
+            id="fullScreen"
             @click="handleFullScreen"
           />
         </div>
       </div>
-    </div>
-  </div>
+    </figcaption>
+  </figure>
 </template>
 
 <style lang="scss">
 @import '@/assets/styles/base.scss';
 
-.zim-video {
+.vidFrame {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
+  top: 10%;
   width: 50rem;
-  .video {
-    width: 50rem;
-  }
-  .controls {
-    transition: all 1s;
-    opacity: 0;
-    background-color: rgba(54, 54, 54, 0.7);
-    visibility: hidden;
-    overflow: hidden;
-    height: 2.9rem;
-    display: flex;
-    width: 50rem;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 89.5%;
-    left: 0%;
-    .left {
-      display: flex;
-      justify-content: center;
-      flex: 0.5;
-      .action {
-        display: flex;
-        align-items: center;
-        border-radius: 50%;
-        z-index: 999;
-        margin-right: 1rem;
-      }
-      .action:hover {
-        cursor: pointer;
-      }
-      .time {
-        display: flex;
-        align-items: center;
-        font-size: 1.2rem;
-        color: #fff;
-      }
-    }
+  height: 27rem;
+  min-height: 180px;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
-    .center {
+.vidBar {
+  transition: all 1s;
+  opacity: 0;
+  background-color: rgba(54, 54, 54, 0.7);
+  visibility: hidden;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 5rem;
+  width: 100%;
+  .left {
+    display: flex;
+    justify-content: center;
+    flex: 0.5;
+    .action {
       display: flex;
       align-items: center;
-      flex: 0.6;
-      .progress {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        height: 0.01rem;
-      }
-      .el-slider__button {
-        height: 1rem;
-        width: 1rem;
-        border: 1px solid $primary-color;
-      }
-      .el-slider__bar {
-        height: 0.6rem;
-        background-color: $primary-color !important;
-      }
+      border-radius: 50%;
+      z-index: 999;
+      margin-right: 1rem;
     }
-    .right {
+    .action:hover {
+      cursor: pointer;
+    }
+    .time {
       display: flex;
-      flex: 0.5;
-      justify-content: space-around;
-      .fullscreen:hover {
-        cursor: pointer;
-      }
+      align-items: center;
+      font-size: 1rem;
+      color: #fff;
     }
   }
-
-  &:hover .controls {
-    opacity: 1;
-    visibility: visible;
+  .center {
+    display: flex;
+    align-items: center;
+    flex: 0.6;
+    .progress {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 0.01rem;
+    }
+    .el-slider__button {
+      height: 1rem;
+      width: 1rem;
+      border: 1px solid $primary-color;
+    }
+    .el-slider__bar {
+      height: 0.6rem;
+      background-color: $primary-color !important;
+    }
   }
+  .right {
+    display: flex;
+    flex: 0.5;
+    justify-content: space-around;
+    align-items: center;
+    .fullscreen:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  z-index: 1;
+}
+
+.vidBar:-moz-full-screen {
+  position: fixed;
+}
+.vidBar:-webkit-full-screen {
+  position: fixed;
+}
+.vidBar:-ms-fullscreen {
+  position: fixed;
+}
+.vidBar:fullscreen {
+  position: fixed;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+.vidBar {
+  z-index: 2147483648;
+}
+
+.vidFrame:hover .vidBar {
+  opacity: 1;
+  visibility: visible;
 }
 </style>
