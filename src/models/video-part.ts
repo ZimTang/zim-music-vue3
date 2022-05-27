@@ -1,4 +1,5 @@
 import { IPlaylistCreator, ITag } from './playlist'
+import { IProfile } from './user'
 
 export interface IVideoTag extends Pick<ITag, 'id' | 'name'> {}
 
@@ -32,6 +33,7 @@ export interface IVideoGroup {
 }
 
 export interface IVideoDetail {
+  creator: IPlaylistCreator
   advertisement: boolean
   avatarUrl: string
   commentCount: number
@@ -41,6 +43,7 @@ export interface IVideoDetail {
   publishTime: number
   playTime: number
   shareCount: number
+  praisedCount: number
   subscribeCount: number
   threadId: string
   title: string
@@ -55,6 +58,16 @@ export interface IUrl {
   size: number
   url: string
   validityTime: number
+}
+
+export interface IComment {
+  commentId: number
+  content: number
+  liked: boolean
+  likedCount: number
+  time: number
+  timeStr: string
+  user: IProfile
 }
 
 export interface IGetVideoTagListRes {
@@ -79,10 +92,25 @@ export interface IGetVideoUrlRes {
   urls: IUrl[]
 }
 
+export interface IGetVideoCommentsRes {
+  cnum: number
+  code: number
+  comments: IComment[]
+  hotComments: IComment[]
+  isMusician: boolean
+  more: boolean
+  moreHot: boolean
+  total: number
+  userId: number
+}
+
 export interface IVideoPartStore {
   currentVideoTag: IVideoTag
   videoTagList: IVideoTag[]
   videos: IVideo[]
   videoDetail: Partial<IVideoDetail>
   videoUrls: IUrl[]
+  videoComments: IComment[]
+  videoCommentsTotal: IGetVideoCommentsRes['total']
+  videoHotComments: IComment[]
 }

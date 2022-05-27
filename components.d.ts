@@ -43,6 +43,7 @@ declare module '@vue/runtime-core' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTree: typeof import('element-plus/es')['ElTree']
+    InfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
     LoginModal: typeof import('./src/components/login-modal/login-modal.vue')['default']
     PlaylistItem: typeof import('./src/components/playlist/playlist-item.vue')['default']

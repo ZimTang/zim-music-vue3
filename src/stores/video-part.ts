@@ -9,6 +9,9 @@ const useVideoPartStore = defineStore('videoList', {
       videoTagList: [],
       videos: [],
       videoDetail: {},
+      videoComments: [],
+      videoCommentsTotal: 0,
+      videoHotComments: [],
       videoUrls: []
     }
   },
@@ -28,6 +31,12 @@ const useVideoPartStore = defineStore('videoList', {
     async getMvUrl(id: number | string) {
       const res = await mvFetch.getMvUrl(id)
       console.log(res)
+    },
+    async getVideoComments(id: string, limit: number = 20, offset: number = 1) {
+      const res = await videoPartFetch.getVideoComments(id, limit, offset)
+      this.videoCommentsTotal = res.total
+      this.videoComments = res.comments
+      this.videoHotComments = res.hotComments
     }
   }
 })

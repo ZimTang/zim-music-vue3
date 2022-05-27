@@ -9,6 +9,8 @@ const props = defineProps({
   url: String,
   isVideoPause: Boolean
 })
+const videoRef = ref<HTMLVideoElement | null>(null)
+const vidFrameRef = ref<HTMLElement | null>(null)
 
 watch(
   () => props.url,
@@ -26,8 +28,6 @@ watch(
 )
 
 const videoPartStore = useVideoPartStore()
-const videoRef = ref<HTMLVideoElement | null>(null)
-const vidFrameRef = ref<HTMLElement | null>(null)
 const isFullScreen = ref(false)
 const currentTime = ref('00:00')
 const currentProgress = ref(0)
@@ -85,6 +85,8 @@ const changeVolume = (val: number) => {
       class="video"
       ref="videoRef"
       @timeupdate="watchCurrentTimeChange"
+      @play="emits('changeVideoState', false)"
+      @ended="emits('changeVideoState', true)"
     ></video>
     <figcaption class="vidBar">
       <div class="left">
