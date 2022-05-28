@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
 import useartistDetailStore from '@/stores/artist-detail'
+import { useRouteIdChange } from '@/hooks/useRouteIdChange'
 
 const artistDetailStore = useartistDetailStore()
-const route = useRoute()
-const artistId = parseInt(route.params.id as string)
-
-onMounted(async () => {
-  await artistDetailStore.getArtistMv(artistId)
-})
+const { isLoading } = useRouteIdChange(artistDetailStore.getArtistMv, 'id')
 </script>
 
 <template>
-  <div class="artist-item-mv">
+  <div class="artist-item-mv" v-loading="isLoading">
     <el-row :gutter="30">
       <el-col :span="4" v-for="item in artistDetailStore.mvs">
         <!-- todo -->
@@ -31,8 +25,8 @@ onMounted(async () => {
   .item {
     display: block;
     .cover {
-      width: 14rem;
-      height: 10rem;
+      width: 100%;
+      height: 13rem;
       border-radius: 10%;
     }
     .name {

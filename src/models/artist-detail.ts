@@ -28,6 +28,11 @@ export interface IMv {
   artist: IArtist
 }
 
+export interface IArtistIntroduction {
+  ti: string
+  txt: string
+}
+
 export interface IGetArtistDetailRes {
   code: number
   data: {
@@ -36,6 +41,16 @@ export interface IGetArtistDetailRes {
     identify: IIdentify
     videoCount: number
   }
+}
+
+export interface IGetArtistDescRes {
+  count: number
+  briefDesc: IArtist['briefDesc']
+  introduction: IArtistIntroduction[]
+}
+
+export interface IGetSimiArtistRes {
+  artists: IArtist[]
 }
 
 export interface IGetArtistAlbumRes {
@@ -58,4 +73,6 @@ export interface IartistDetailStore {
   videoCount: number
   hotAlbums: IAlbum[]
   mvs: IMv[]
+  artistDesc: Partial<IGetArtistDescRes>
+  simiArtist: IArtist[]
 }

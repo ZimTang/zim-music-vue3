@@ -17,8 +17,13 @@ defineProps<{
 </template>
 
 <style lang="scss">
+.video-item {
+  width: 100%;
+}
+
 .video-item-block {
   display: inline-block;
+  width: 25rem;
   margin-bottom: 3rem;
   & img {
     border-radius: 2%;

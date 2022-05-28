@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
 import useartistDetailStore from '@/stores/artist-detail'
+import { useRouteIdChange } from '@/hooks/useRouteIdChange'
 
-const route = useRoute()
-const artistId = parseInt(route.params.id as string)
 const artistDetailStore = useartistDetailStore()
-
-onMounted(async () => {
-  await artistDetailStore.getArtistAlbum(artistId)
-})
+const { isLoading } = useRouteIdChange(artistDetailStore.getArtistAlbum, 'id')
 </script>
 
 <template>
-  <div class="artist-item-album">
+  <div class="artist-item-album" v-loading="isLoading">
     <el-row :gutter="30">
       <el-col :span="3" v-for="item in artistDetailStore.hotAlbums">
         <router-link :to="'/album/' + item.id" class="item">

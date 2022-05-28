@@ -1,36 +1,52 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { FolderAdd } from '@element-plus/icons-vue'
 import useartistDetailStore from '@/stores/artist-detail'
 import LinkHeader from '@/common/link-header.vue'
 
 const route = useRoute()
-const artistId = parseInt(route.params.id as string)
 const artistDetailStore = useartistDetailStore()
+const isLoading = ref(false)
+
+watch(
+  () => route.params.id,
+  async () => {
+    config.value[0].to =
+      '/artistDetail/artistDetailAlbum/' + parseInt(route.params.id as string)
+    config.value[1].to =
+      '/artistDetail/artistDetailMv/' + parseInt(route.params.id as string)
+    config.value[2].to =
+      '/artistDetail/artistDetailInfo/' + parseInt(route.params.id as string)
+    config.value[3].to =
+      '/artistDetail/artistDetailSimi/' + parseInt(route.params.id as string)
+    await artistDetailStore.getArtistDetail(parseInt(route.params.id as string))
+  }
+)
 
 onMounted(async () => {
-  await artistDetailStore.getArtistDetail(artistId)
+  await artistDetailStore.getArtistDetail(parseInt(route.params.id as string))
 })
 
-const config = [
+const config = ref([
   {
-    to: '/artistDetail/artistDetailAlbum/' + artistId,
+    to:
+      '/artistDetail/artistDetailAlbum/' + parseInt(route.params.id as string),
     text: '专辑'
   },
   {
-    to: '/artistDetail/artistDetailMv/' + artistId,
+    to: '/artistDetail/artistDetailMv/' + parseInt(route.params.id as string),
     text: 'MV'
   },
   {
-    to: '/artistDetail/artistDetailInfo/' + artistId,
+    to: '/artistDetail/artistDetailInfo/' + parseInt(route.params.id as string),
     text: '歌手详情'
   },
   {
-    to: '/artistDetail/artistDetailSimi/' + artistId,
+    to: '/artistDetail/artistDetailSimi/' + parseInt(route.params.id as string),
     text: '相似歌手'
   }
-]
+])
 </script>
 
 <template>
@@ -62,7 +78,11 @@ const config = [
       </div>
     </div>
     <link-header :config="config" width="calc(100% - 30vw)" />
-    <router-view style="margin-top: 3rem" v-slot="{ Component }">
+    <router-view
+      style="margin-top: 3rem"
+      v-slot="{ Component }"
+      v-loading="isLoading"
+    >
       <keep-alive>
         <component :is="Component" />
       </keep-alive>
