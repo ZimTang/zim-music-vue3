@@ -70,6 +70,12 @@ export interface IComment {
   user: IProfile
 }
 
+export interface IRelatedVideo
+  extends Pick<
+    IVideoData,
+    'vid' | 'alg' | 'coverUrl' | 'playTime' | 'creator' | 'title'
+  > {}
+
 export interface IGetVideoTagListRes {
   code: number
   data: IVideoTag[]
@@ -104,6 +110,11 @@ export interface IGetVideoCommentsRes {
   userId: number
 }
 
+export interface IGetRelatedVideo {
+  code: number
+  data: IRelatedVideo[]
+}
+
 export interface IVideoPartStore {
   currentVideoTag: IVideoTag
   videoTagList: IVideoTag[]
@@ -113,4 +124,5 @@ export interface IVideoPartStore {
   videoComments: IComment[]
   videoCommentsTotal: IGetVideoCommentsRes['total']
   videoHotComments: IComment[]
+  relatedVideos: IRelatedVideo[]
 }

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { IVideo } from '@/models/video-part'
-const props = defineProps<{
-  item: IVideo
+import { IVideoData } from '@/models/video-part'
+defineProps<{
+  item: Pick<IVideoData, 'coverUrl' | 'vid' | 'title'>
 }>()
 </script>
 
 <template>
   <div class="video-item">
-    <router-link :to="'/videoDetail/' + item.data.vid" class="video-item-block">
-      <el-image :src="item.data.coverUrl"></el-image>
+    <router-link :to="'/videoDetail/' + item.vid" class="video-item-block">
+      <el-image :src="item.coverUrl"></el-image>
       <div class="name">
-        {{ item.data.title }}
+        {{ item.title }}
       </div>
     </router-link>
   </div>
@@ -18,6 +18,7 @@ const props = defineProps<{
 
 <style lang="scss">
 .video-item-block {
+  display: inline-block;
   margin-bottom: 3rem;
   & img {
     border-radius: 2%;

@@ -1,4 +1,5 @@
 import {
+  IGetRelatedVideo,
   IGetVideoCommentsRes,
   IGetVideoDetailRes,
   IGetVideosByTagRes,
@@ -34,10 +35,15 @@ const getVideoComments = (
   return http.get('/comment/video', { params: { id, limit, offset } })
 }
 
+const getRelatedVideo = (id: string): Promise<IGetRelatedVideo> => {
+  return http.get('/related/allvideo', { params: { id } })
+}
+
 export default {
   getVideoTagList,
   getVideosByTag,
   getVideoDetail,
   getVideoUrl,
-  getVideoComments
+  getVideoComments,
+  getRelatedVideo
 }

@@ -8,26 +8,25 @@ import zimVideo from '@/components/zim-video/zim-video.vue'
 import ActionItem from '@/common/action-item.vue'
 import { formatCount } from '@/utils/count'
 import CommentItem from '@/common/comment-item.vue'
+import videoItem from '@/common/video-item.vue'
 
 const route = useRoute()
 const videoPartStore = useVideoPartStore()
 const isVideoPause = ref(false)
+const isLoading = ref(false)
 
-watch(
-  () => route.params.vid,
-  async () => {
-    isVideoPause.value = true
-    await videoPartStore.getVideoDetail(route.params.vid as string)
-    await videoPartStore.getVideoUrl(route.params.vid as string)
-  }
-)
-
-onMounted(async () => {
+const initData = async () => {
+  isLoading.value = true
   isVideoPause.value = true
   await videoPartStore.getVideoDetail(route.params.vid as string)
   await videoPartStore.getVideoUrl(route.params.vid as string)
   await videoPartStore.getVideoComments(route.params.vid as string)
-})
+  await videoPartStore.getRelatedVideo(route.params.vid as string)
+  isLoading.value = false
+}
+
+onMounted(initData)
+watch(() => route.params.vid, initData)
 
 const handleChangeVideoState = (isPause: boolean) => {
   isVideoPause.value = isPause
@@ -35,7 +34,7 @@ const handleChangeVideoState = (isPause: boolean) => {
 </script>
 
 <template>
-  <div class="video-detail-container">
+  <div class="video-detail-container" v-loading="isLoading">
     <div class="video-detail">
       <h3>视频详情</h3>
       <div class="videoContainer">
@@ -103,6 +102,9 @@ const handleChangeVideoState = (isPause: boolean) => {
     </div>
     <div class="relative">
       <h3>相关视频</h3>
+      <template v-for="item in videoPartStore.relatedVideos" :key="item.alg">
+        <video-item class="video-item" :item="item"></video-item>
+      </template>
     </div>
   </div>
 </template>
@@ -111,13 +113,9 @@ const handleChangeVideoState = (isPause: boolean) => {
 .video-detail-container {
   display: flex;
 }
+
 .video-detail {
   flex: 1;
-}
-.relative {
-  flex-basis: 50rem;
-}
-.video-detail {
   padding-left: 10rem;
   .title {
     font-size: 2rem;
@@ -158,6 +156,21 @@ const handleChangeVideoState = (isPause: boolean) => {
   .actions {
     margin-top: 2rem;
     display: flex;
+  }
+}
+
+.relative {
+  flex-basis: 40rem;
+  .video-item {
+    .video-item-block {
+      .name {
+        font-size: 1.2rem;
+      }
+      width: 20rem;
+      .el-image img {
+        width: 20rem;
+      }
+    }
   }
 }
 </style>

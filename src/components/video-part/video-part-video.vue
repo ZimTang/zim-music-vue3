@@ -47,7 +47,7 @@ const handleChangeCurrentTag = (item: IVideoTag) => {
       empty-description="暂无视频"
       v-slot="{ item }"
     >
-      <video-item :item="item" />
+      <video-item :item="item.data" />
     </zim-list>
   </div>
 </template>
