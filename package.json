@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --mode development",
+    "dev": "vue-tsc --noEmit && vite --mode development",
     "build": "vue-tsc --noEmit && vite build --mode production",
     "preview": "vite preview",
     "prettier": "prettier --write .",
@@ -34,7 +34,7 @@
     "unplugin-element-plus": "^0.4.0",
     "unplugin-vue-components": "^0.19.5",
     "vite": "^2.9.9",
-    "vue-tsc": "^0.34.7"
+    "vue-tsc": "^0.34.13"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

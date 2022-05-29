@@ -23,7 +23,7 @@ specifiers:
   vite: ^2.9.9
   vue: ^3.2.25
   vue-router: '4'
-  vue-tsc: ^0.34.7
+  vue-tsc: ^0.34.13
 
 dependencies:
   '@element-plus/icons-vue': 1.1.4_vue@3.2.33
@@ -670,7 +670,6 @@ packages:
     dependencies:
       '@vue/reactivity': 3.2.33
       '@vue/shared': 3.2.33
-    dev: false
 
   /@vue/runtime-dom/3.2.33:
     resolution:
@@ -681,7 +680,6 @@ packages:
       '@vue/runtime-core': 3.2.33
       '@vue/shared': 3.2.33
       csstype: 2.6.20
-    dev: false
 
   /@vue/server-renderer/3.2.33_vue@3.2.33:
     resolution:
@@ -694,7 +692,6 @@ packages:
       '@vue/compiler-ssr': 3.2.33
       '@vue/shared': 3.2.33
       vue: 3.2.33
-    dev: false
 
   /@vue/shared/3.2.33:
     resolution:
@@ -1257,7 +1254,6 @@ packages:
       {
         integrity: sha512-/WwNkdXfckNgw6S5R125rrW8ez139lBHWouiBvX8dfMFtcn6V81REDqnH7+CRpRipfYlyU1CmOnOxrmGcFOjeA==
       }
-    dev: false
 
   /dargs/7.0.0:
     resolution:
@@ -3672,7 +3668,6 @@ packages:
       }
     engines: { node: '>=4.2.0' }
     hasBin: true
-    dev: true
 
   /universalify/2.0.0:
     resolution:
@@ -3905,7 +3900,6 @@ packages:
       '@vue/runtime-dom': 3.2.33
       '@vue/server-renderer': 3.2.33_vue@3.2.33
       '@vue/shared': 3.2.33
-    dev: false
 
   /webpack-sources/3.2.3:
     resolution:

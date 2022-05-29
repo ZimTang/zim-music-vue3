@@ -12,6 +12,7 @@ const useUserStore = defineStore('user', {
       records: [],
       playlist: [],
       personalized: [],
+      likelist: [],
       isAuth: false
     }
   },
